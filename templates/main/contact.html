@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - WizGuide{% endblock %}
+
+{% block content %}
+    <h2>Contact Us</h2>
+    <p>We’d love to hear from you! Whether you have a question, suggestion, or just want to share your thoughts, feel free to reach out to us using the form below.</p>
+
+    <form action="/submit_contact/" method="post">
+        {% csrf_token %}
+        <div>
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="message">Your Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+    </form>
+
+    <h3>Other Ways to Reach Us</h3>
+    <p>You can also get in touch with us through our social media profiles:</p>
+    <ul>
+        <li><a href="https://twitter.com/WizGuide" target="_blank"><i class="fab fa-twitter"></i> Twitter</a></li>
+        <li><a href="https://facebook.com/WizGuide" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+        <li><a href="https://instagram.com/WizGuide" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+    </ul>
+{% endblock %}

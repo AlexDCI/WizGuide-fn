@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>AI Translator</h1>
+
+    {% if user.is_authenticated %}
+    <p>Вы вошли как <strong>{{ user.username }}</strong></p>
+    <a href="{% url 'logout' %}">Выйти</a>
+    {% else %}
+    <a href="{% url 'login' %}">Войти</a> | <a href="{% url 'register' %}">Регистрация</a>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label>Исходный язык:</label>
+        <select name="source_lang">
+            <option value="English">English</option>
+            <option value="Russian">Russian</option>
+            <option value="German">German</option>
+            <option value="Spanish">Spanish</option>
+            <option value="French">French</option>
+            <option value="Italian">Italian</option>
+            <option value="Portuguese">Portuguese</option>
+            <option value="Chinese">Chinese (Simplified)</option>
+            <option value="Chinese-Traditional">Chinese (Traditional)</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Korean">Korean</option>
+            <option value="Arabic">Arabic</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Urdu">Urdu</option>
+            <option value="Turkish">Turkish</option>
+            <option value="Dutch">Dutch</option>
+            <option value="Greek">Greek</option>
+            <option value="Polish">Polish</option>
+            <option value="Czech">Czech</option>
+            <option value="Hungarian">Hungarian</option>
+            <option value="Swedish">Swedish</option>
+            <option value="Danish">Danish</option>
+            <option value="Finnish">Finnish</option>
+            <option value="Norwegian">Norwegian</option>
+            <option value="Hebrew">Hebrew</option>
+            <option value="Thai">Thai</option>
+            <option value="Vietnamese">Vietnamese</option>
+            <option value="Indonesian">Indonesian</option>
+            <option value="Malay">Malay</option>
+            <option value="Filipino">Filipino</option>
+            <option value="Romanian">Romanian</option>
+            <option value="Slovak">Slovak</option>
+            <option value="Bulgarian">Bulgarian</option>
+            <option value="Croatian">Croatian</option>
+            <option value="Serbian">Serbian</option>
+            <option value="Slovenian">Slovenian</option>
+            <option value="Lithuanian">Lithuanian</option>
+            <option value="Latvian">Latvian</option>
+            <option value="Estonian">Estonian</option>
+            <option value="Georgian">Georgian</option>
+            <option value="Armenian">Armenian</option>
+            <option value="Persian">Persian</option>
+            <option value="Pashto">Pashto</option>
+            <option value="Azerbaijani">Azerbaijani</option>
+            <option value="Kazakh">Kazakh</option>
+            <option value="Uzbek">Uzbek</option>
+            <option value="Tajik">Tajik</option>
+            <option value="Turkmen">Turkmen</option>
+            <option value="Kyrgyz">Kyrgyz</option>
+            <option value="Mongolian">Mongolian</option>
+            <option value="Swahili">Swahili</option>
+            <option value="Zulu">Zulu</option>
+            <option value="Xhosa">Xhosa</option>
+            <option value="Afrikaans">Afrikaans</option>
+            <option value="Haitian Creole">Haitian Creole</option>
+            <option value="Basque">Basque</option>
+            <option value="Galician">Galician</option>
+            <option value="Catalan">Catalan</option>
+            <option value="Irish">Irish</option>
+            <option value="Welsh">Welsh</option>
+            <option value="Scottish Gaelic">Scottish Gaelic</option>
+            <option value="Maltese">Maltese</option>
+            <option value="Icelandic">Icelandic</option>
+            <option value="Sanskrit">Sanskrit</option>
+            <option value="Tibetan">Tibetan</option>
+            <option value="Maori">Maori</option>
+            <option value="Samoan">Samoan</option>
+            <option value="Tongan">Tongan</option>
+        </select>
+
+        <label>Целевой язык:</label>
+        <select name="target_lang">
+            <option value="English">English</option>
+            <option value="Russian">Russian</option>
+            <option value="German">German</option>
+            <option value="Spanish">Spanish</option>
+            <option value="French">French</option>
+            <option value="Italian">Italian</option>
+            <option value="Portuguese">Portuguese</option>
+            <option value="Chinese">Chinese (Simplified)</option>
+            <option value="Chinese-Traditional">Chinese (Traditional)</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Korean">Korean</option>
+            <option value="Arabic">Arabic</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Urdu">Urdu</option>
+            <option value="Turkish">Turkish</option>
+            <option value="Dutch">Dutch</option>
+            <option value="Greek">Greek</option>
+            <option value="Polish">Polish</option>
+            <option value="Czech">Czech</option>
+            <option value="Hungarian">Hungarian</option>
+            <option value="Swedish">Swedish</option>
+            <option value="Danish">Danish</option>
+            <option value="Finnish">Finnish</option>
+            <option value="Norwegian">Norwegian</option>
+            <option value="Hebrew">Hebrew</option>
+            <option value="Thai">Thai</option>
+            <option value="Vietnamese">Vietnamese</option>
+            <option value="Indonesian">Indonesian</option>
+            <option value="Malay">Malay</option>
+            <option value="Filipino">Filipino</option>
+            <option value="Romanian">Romanian</option>
+            <option value="Slovak">Slovak</option>
+            <option value="Bulgarian">Bulgarian</option>
+            <option value="Croatian">Croatian</option>
+            <option value="Serbian">Serbian</option>
+            <option value="Slovenian">Slovenian</option>
+            <option value="Lithuanian">Lithuanian</option>
+            <option value="Latvian">Latvian</option>
+            <option value="Estonian">Estonian</option>
+            <option value="Georgian">Georgian</option>
+            <option value="Armenian">Armenian</option>
+            <option value="Persian">Persian</option>
+            <option value="Pashto">Pashto</option>
+            <option value="Azerbaijani">Azerbaijani</option>
+            <option value="Kazakh">Kazakh</option>
+            <option value="Uzbek">Uzbek</option>
+            <option value="Tajik">Tajik</option>
+            <option value="Turkmen">Turkmen</option>
+            <option value="Kyrgyz">Kyrgyz</option>
+            <option value="Mongolian">Mongolian</option>
+            <option value="Swahili">Swahili</option>
+            <option value="Zulu">Zulu</option>
+            <option value="Xhosa">Xhosa</option>
+            <option value="Afrikaans">Afrikaans</option>
+            <option value="Haitian Creole">Haitian Creole</option>
+            <option value="Basque">Basque</option>
+            <option value="Galician">Galician</option>
+            <option value="Catalan">Catalan</option>
+            <option value="Irish">Irish</option>
+            <option value="Welsh">Welsh</option>
+            <option value="Scottish Gaelic">Scottish Gaelic</option>
+            <option value="Maltese">Maltese</option>
+            <option value="Icelandic">Icelandic</option>
+            <option value="Sanskrit">Sanskrit</option>
+            <option value="Tibetan">Tibetan</option>
+            <option value="Maori">Maori</option>
+            <option value="Samoan">Samoan</option>
+            <option value="Tongan">Tongan</option>
+        </select>
+
+        <label>Текст для перевода:</label>
+        <textarea name="text"></textarea>
+
+        <label>Нужен комментарий?</label>
+        <textarea name="comment_request" placeholder="Опционально"></textarea>
+
+        <button type="submit">Перевести</button>
+    </form>
+
+    {% if translation %}
+    <div class="output">
+        <h3>Перевод:</h3>
+        <p>{{ translation }}</p>
+
+        {% if comment %}
+        <h3>Объяснение:</h3>
+        <p>{{ comment }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <h2>История переводов</h2>
+    {% for chat in user.chathistory_set.all %}
+    <div class="history-item">
+        <strong>Запрос:</strong> {{ chat.input_text }} <br>
+        <strong>Перевод:</strong> {{ chat.translated_text }} <br>
+        {% if chat.comment %}
+        <strong>Комментарий:</strong> {{ chat.comment }} <br>
+        {% endif %}
+        <em>{{ chat.timestamp }}</em>
+    </div>
+    {% empty %}
+    <p>История пока пуста.</p>
+    {% endfor %}
+</div>
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 2rem;
+        text-align: center;
+    }
+    textarea, select, button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .output {
+        background-color: #f9f9f9;
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 5px;
+    }
+    .history-item {
+        background-color: #e6e6e6;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        text-align: left;
+    }
+</style>
+{% endblock %}
