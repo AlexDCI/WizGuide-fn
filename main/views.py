@@ -11,6 +11,7 @@ from .translations import TRANSLATIONS  # Импортируем перевод�
 import os
 import json
 from django.utils.translation import gettext_lazy as _
+from .services import translate_text_api, generate_comment_api, save_chat_to_db, get_user_chat_history
 
 
 # def index(request):
@@ -28,10 +29,6 @@ def contact(request):
 def main_page(request):
     return render(request, 'main/main.html')
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
-
-
 def get_translations(lang):
     """
     Получение переводов для выбранного языка.
@@ -39,47 +36,71 @@ def get_translations(lang):
     """
     return TRANSLATIONS.get(lang, TRANSLATIONS["English"])
 
+# @login_required
+# def translate_text(request):
+#     """Основное представление для перевода с локализацией заголовков"""
+#     # Получаем выбранный язык из GET-запроса (или используем по умолчанию английский)
+#     selected_lang = request.GET.get("lang", "English")
+#     translations = get_translations(selected_lang)  # Получаем переводы для выбранного языка
 
+#     # Загружаем историю чатов
+#     chat_history = get_user_chat_history(request.user)
 
-def translate_text_api(source_lang, target_lang, text):
-    """Перевод текста через OpenAI API"""
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": f"You are a translator. Translate from {source_lang} to {target_lang}."},
-            {"role": "user", "content": text},
-        ]
-    )
-    return response["choices"][0]["message"]["content"]
+#     if request.method == "POST":
+#         source_lang = request.POST.get("source_lang")
+#         target_lang = request.POST.get("target_lang")
+#         text = request.POST.get("text")
+#         comment_request = request.POST.get("comment_request")
 
-def generate_comment_api(target_lang, translation, comment_request):
-    """Генерация комментария к переводу"""
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": f"You are an assistant providing explanations. Respond in {target_lang}."},
-            {"role": "user", "content": f"Translation: {translation}. {comment_request}"},
-        ]
-    )
-    return response["choices"][0]["message"]["content"]
+#         # Перевод текста
+#         translation = translate_text_api(source_lang, target_lang, text)
+#         # Генерация комментария (если есть запрос)
+#         comment = generate_comment_api(target_lang, translation, comment_request) if comment_request else None
 
-def save_chat_to_db(user, input_text, translated_text, comment):
-    """Сохранение чата в базу данных"""
-    ChatHistory.objects.create(
-        user=user,
-        input_text=input_text,
-        translated_text=translated_text,
-        comment=comment
-    )
+#         # Сохранение в БД
+#         save_chat_to_db(request.user, text, translation, comment)
+
+#         return render(request, "main/translate.html", {
+#             "translation": translation,
+#             "comment": comment,
+#             "translations": translations,  # Передаем переводы в шаблон
+#             "selected_lang": selected_lang,  # Передаем текущий выбранный язык
+#             "chat_history": chat_history  # Передаем историю в шаблон
+#         })
+
+#     # Возвращаем форму с выбранным языком (если не POST)
+#     return render(request, "main/translate.html", {
+#         "translations": translations,  # Передаем переводы в шаблон
+#         "selected_lang": selected_lang,  # Передаем текущий выбранный язык
+#         "chat_history": chat_history  # Передаем историю
+#     })
+
 
 @login_required
 def translate_text(request):
     """Основное представление для перевода с локализацией заголовков"""
+    
+    # Список доступных языков
+    languages = [
+        "English", "Russian", "German", "Spanish", "French", "Italian", 
+        "Portuguese", "Chinese", "Chinese-Traditional", "Japanese", "Korean", 
+        "Arabic", "Hindi", "Bengali", "Urdu", "Turkish", "Dutch", "Greek", 
+        "Polish", "Czech", "Hungarian", "Swedish", "Danish", "Finnish", "Norwegian", 
+        "Hebrew", "Thai", "Vietnamese", "Indonesian", "Malay", "Filipino", 
+        "Romanian", "Slovak", "Bulgarian", "Croatian", "Serbian", "Slovenian", 
+        "Lithuanian", "Latvian", "Estonian", "Georgian", "Armenian", "Persian", 
+        "Pashto", "Azerbaijani", "Kazakh", "Uzbek", "Tajik", "Turkmen", "Kyrgyz", 
+        "Mongolian", "Swahili", "Zulu", "Xhosa", "Afrikaans", "Haitian Creole", 
+        "Basque", "Galician", "Catalan", "Irish", "Welsh", "Scottish Gaelic", 
+        "Maltese", "Icelandic", "Sanskrit", "Tibetan", "Maori", "Samoan", "Tongan"
+    ]
+
     # Получаем выбранный язык из GET-запроса (или используем по умолчанию английский)
     selected_lang = request.GET.get("lang", "English")
     translations = get_translations(selected_lang)  # Получаем переводы для выбранного языка
 
-    chat_history = ChatHistory.objects.filter(user=request.user).order_by("-created_at")  # Загружаем историю
+    # Загружаем историю чатов
+    chat_history = get_user_chat_history(request.user)
 
     if request.method == "POST":
         source_lang = request.POST.get("source_lang")
@@ -100,13 +121,14 @@ def translate_text(request):
             "comment": comment,
             "translations": translations,  # Передаем переводы в шаблон
             "selected_lang": selected_lang,  # Передаем текущий выбранный язык
-            "chat_history": chat_history  # Передаем историю в шаблон
+            "chat_history": chat_history,  # Передаем историю в шаблон
+            "languages": languages  # Передаем список языков
         })
 
     # Возвращаем форму с выбранным языком (если не POST)
     return render(request, "main/translate.html", {
         "translations": translations,  # Передаем переводы в шаблон
         "selected_lang": selected_lang,  # Передаем текущий выбранный язык
-        "chat_history": chat_history  # Передаем историю
+        "chat_history": chat_history,  # Передаем историю
+        "languages": languages  # Передаем список языков
     })
-

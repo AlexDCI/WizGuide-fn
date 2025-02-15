@@ -7,77 +7,9 @@
         <!-- Селектор языка -->
         <label for="lang">{{ translations.language_label }}:</label>
         <select name="lang" id="lang" onchange="this.form.submit()">
-            <option value="English" {% if selected_lang == 'English' %}selected{% endif %}>English</option>
-            <option value="Russian" {% if selected_lang == 'Russian' %}selected{% endif %}>Russian</option>
-            <option value="German" {% if selected_lang == 'German' %}selected{% endif %}>German</option>
-            <option value="Spanish" {% if selected_lang == 'Spanish' %}selected{% endif %}>Spanish</option>
-            <option value="French" {% if selected_lang == 'French' %}selected{% endif %}>French</option>
-            <option value="Italian" {% if selected_lang == 'Italian' %}selected{% endif %}>Italian</option>
-            <option value="Portuguese" {% if selected_lang == 'Portuguese' %}selected{% endif %}>Portuguese</option>
-            <option value="Chinese" {% if selected_lang == 'Chinese' %}selected{% endif %}>Chinese (Simplified)</option>
-            <option value="Chinese-Traditional" {% if selected_lang == 'Chinese-Traditional' %}selected{% endif %}>Chinese (Traditional)</option>
-            <option value="Japanese" {% if selected_lang == 'Japanese' %}selected{% endif %}>Japanese</option>
-            <option value="Korean" {% if selected_lang == 'Korean' %}selected{% endif %}>Korean</option>
-            <option value="Arabic" {% if selected_lang == 'Arabic' %}selected{% endif %}>Arabic</option>
-            <option value="Hindi" {% if selected_lang == 'Hindi' %}selected{% endif %}>Hindi</option>
-            <option value="Bengali" {% if selected_lang == 'Bengali' %}selected{% endif %}>Bengali</option>
-            <option value="Urdu" {% if selected_lang == 'Urdu' %}selected{% endif %}>Urdu</option>
-            <option value="Turkish" {% if selected_lang == 'Turkish' %}selected{% endif %}>Turkish</option>
-            <option value="Dutch" {% if selected_lang == 'Dutch' %}selected{% endif %}>Dutch</option>
-            <option value="Greek" {% if selected_lang == 'Greek' %}selected{% endif %}>Greek</option>
-            <option value="Polish" {% if selected_lang == 'Polish' %}selected{% endif %}>Polish</option>
-            <option value="Czech" {% if selected_lang == 'Czech' %}selected{% endif %}>Czech</option>
-            <option value="Hungarian" {% if selected_lang == 'Hungarian' %}selected{% endif %}>Hungarian</option>
-            <option value="Swedish" {% if selected_lang == 'Swedish' %}selected{% endif %}>Swedish</option>
-            <option value="Danish" {% if selected_lang == 'Danish' %}selected{% endif %}>Danish</option>
-            <option value="Finnish" {% if selected_lang == 'Finnish' %}selected{% endif %}>Finnish</option>
-            <option value="Norwegian" {% if selected_lang == 'Norwegian' %}selected{% endif %}>Norwegian</option>
-            <option value="Hebrew" {% if selected_lang == 'Hebrew' %}selected{% endif %}>Hebrew</option>
-            <option value="Thai" {% if selected_lang == 'Thai' %}selected{% endif %}>Thai</option>
-            <option value="Vietnamese" {% if selected_lang == 'Vietnamese' %}selected{% endif %}>Vietnamese</option>
-            <option value="Indonesian" {% if selected_lang == 'Indonesian' %}selected{% endif %}>Indonesian</option>
-            <option value="Malay" {% if selected_lang == 'Malay' %}selected{% endif %}>Malay</option>
-            <option value="Filipino" {% if selected_lang == 'Filipino' %}selected{% endif %}>Filipino</option>
-            <option value="Romanian" {% if selected_lang == 'Romanian' %}selected{% endif %}>Romanian</option>
-            <option value="Slovak" {% if selected_lang == 'Slovak' %}selected{% endif %}>Slovak</option>
-            <option value="Bulgarian" {% if selected_lang == 'Bulgarian' %}selected{% endif %}>Bulgarian</option>
-            <option value="Croatian" {% if selected_lang == 'Croatian' %}selected{% endif %}>Croatian</option>
-            <option value="Serbian" {% if selected_lang == 'Serbian' %}selected{% endif %}>Serbian</option>
-            <option value="Slovenian" {% if selected_lang == 'Slovenian' %}selected{% endif %}>Slovenian</option>
-            <option value="Lithuanian" {% if selected_lang == 'Lithuanian' %}selected{% endif %}>Lithuanian</option>
-            <option value="Latvian" {% if selected_lang == 'Latvian' %}selected{% endif %}>Latvian</option>
-            <option value="Estonian" {% if selected_lang == 'Estonian' %}selected{% endif %}>Estonian</option>
-            <option value="Georgian" {% if selected_lang == 'Georgian' %}selected{% endif %}>Georgian</option>
-            <option value="Armenian" {% if selected_lang == 'Armenian' %}selected{% endif %}>Armenian</option>
-            <option value="Persian" {% if selected_lang == 'Persian' %}selected{% endif %}>Persian</option>
-            <option value="Pashto" {% if selected_lang == 'Pashto' %}selected{% endif %}>Pashto</option>
-            <option value="Azerbaijani" {% if selected_lang == 'Azerbaijani' %}selected{% endif %}>Azerbaijani</option>
-            <option value="Kazakh" {% if selected_lang == 'Kazakh' %}selected{% endif %}>Kazakh</option>
-            <option value="Uzbek" {% if selected_lang == 'Uzbek' %}selected{% endif %}>Uzbek</option>
-            <option value="Tajik" {% if selected_lang == 'Tajik' %}selected{% endif %}>Tajik</option>
-            <option value="Turkmen" {% if selected_lang == 'Turkmen' %}selected{% endif %}>Turkmen</option>
-            <option value="Kyrgyz" {% if selected_lang == 'Kyrgyz' %}selected{% endif %}>Kyrgyz</option>
-            <option value="Mongolian" {% if selected_lang == 'Mongolian' %}selected{% endif %}>Mongolian</option>
-            <option value="Swahili" {% if selected_lang == 'Swahili' %}selected{% endif %}>Swahili</option>
-            <option value="Zulu" {% if selected_lang == 'Zulu' %}selected{% endif %}>Zulu</option>
-            <option value="Xhosa" {% if selected_lang == 'Xhosa' %}selected{% endif %}>Xhosa</option>
-            <option value="Afrikaans" {% if selected_lang == 'Afrikaans' %}selected{% endif %}>Afrikaans</option>
-            <option value="Haitian Creole" {% if selected_lang == 'Haitian Creole' %}selected{% endif %}>Haitian Creole</option>
-            <option value="Basque" {% if selected_lang == 'Basque' %}selected{% endif %}>Basque</option>
-            <option value="Galician" {% if selected_lang == 'Galician' %}selected{% endif %}>Galician</option>
-            <option value="Catalan" {% if selected_lang == 'Catalan' %}selected{% endif %}>Catalan</option>
-            <option value="Irish" {% if selected_lang == 'Irish' %}selected{% endif %}>Irish</option>
-            <option value="Welsh" {% if selected_lang == 'Welsh' %}selected{% endif %}>Welsh</option>
-            <option value="Scottish Gaelic" {% if selected_lang == 'Scottish Gaelic' %}selected{% endif %}>Scottish Gaelic</option>
-            <option value="Maltese" {% if selected_lang == 'Maltese' %}selected{% endif %}>Maltese</option>
-            <option value="Icelandic" {% if selected_lang == 'Icelandic' %}selected{% endif %}>Icelandic</option>
-            <option value="Sanskrit" {% if selected_lang == 'Sanskrit' %}selected{% endif %}>Sanskrit</option>
-            <option value="Tibetan" {% if selected_lang == 'Tibetan' %}selected{% endif %}>Tibetan</option>
-            <option value="Maori" {% if selected_lang == 'Maori' %}selected{% endif %}>Maori</option>
-            <option value="Samoan" {% if selected_lang == 'Samoan' %}selected{% endif %}>Samoan</option>
-            <option value="Tongan" {% if selected_lang == 'Tongan' %}selected{% endif %}>Tongan</option>
-
-            <!-- Добавьте другие языки по аналогии -->
+            {% for lang in languages %}
+                <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
+            {% endfor %}
         </select>
     </form>
 
@@ -92,150 +24,16 @@
         {% csrf_token %}
         <label for="source_lang">{{ translations.source_lang_label }}:</label>
         <select name="source_lang" id="source_lang">
-            <option value="English">English</option>
-            <option value="Russian">Russian</option>
-            <option value="German">German</option>
-            <option value="Spanish">Spanish</option>
-            <option value="French">French</option>
-            <option value="Italian">Italian</option>
-            <option value="Portuguese">Portuguese</option>
-            <option value="Chinese">Chinese (Simplified)</option>
-            <option value="Chinese-Traditional">Chinese (Traditional)</option>
-            <option value="Japanese">Japanese</option>
-            <option value="Korean">Korean</option>
-            <option value="Arabic">Arabic</option>
-            <option value="Hindi">Hindi</option>
-            <option value="Bengali">Bengali</option>
-            <option value="Urdu">Urdu</option>
-            <option value="Turkish">Turkish</option>
-            <option value="Dutch">Dutch</option>
-            <option value="Greek">Greek</option>
-            <option value="Polish">Polish</option>
-            <option value="Czech">Czech</option>
-            <option value="Hungarian">Hungarian</option>
-            <option value="Swedish">Swedish</option>
-            <option value="Danish">Danish</option>
-            <option value="Finnish">Finnish</option>
-            <option value="Norwegian">Norwegian</option>
-            <option value="Hebrew">Hebrew</option>
-            <option value="Thai">Thai</option>
-            <option value="Vietnamese">Vietnamese</option>
-            <option value="Indonesian">Indonesian</option>
-            <option value="Malay">Malay</option>
-            <option value="Filipino">Filipino</option>
-            <option value="Romanian">Romanian</option>
-            <option value="Slovak">Slovak</option>
-            <option value="Bulgarian">Bulgarian</option>
-            <option value="Croatian">Croatian</option>
-            <option value="Serbian">Serbian</option>
-            <option value="Slovenian">Slovenian</option>
-            <option value="Lithuanian">Lithuanian</option>
-            <option value="Latvian">Latvian</option>
-            <option value="Estonian">Estonian</option>
-            <option value="Georgian">Georgian</option>
-            <option value="Armenian">Armenian</option>
-            <option value="Persian">Persian</option>
-            <option value="Pashto">Pashto</option>
-            <option value="Azerbaijani">Azerbaijani</option>
-            <option value="Kazakh">Kazakh</option>
-            <option value="Uzbek">Uzbek</option>
-            <option value="Tajik">Tajik</option>
-            <option value="Turkmen">Turkmen</option>
-            <option value="Kyrgyz">Kyrgyz</option>
-            <option value="Mongolian">Mongolian</option>
-            <option value="Swahili">Swahili</option>
-            <option value="Zulu">Zulu</option>
-            <option value="Xhosa">Xhosa</option>
-            <option value="Afrikaans">Afrikaans</option>
-            <option value="Haitian Creole">Haitian Creole</option>
-            <option value="Basque">Basque</option>
-            <option value="Galician">Galician</option>
-            <option value="Catalan">Catalan</option>
-            <option value="Irish">Irish</option>
-            <option value="Welsh">Welsh</option>
-            <option value="Scottish Gaelic">Scottish Gaelic</option>
-            <option value="Maltese">Maltese</option>
-            <option value="Icelandic">Icelandic</option>
-            <option value="Sanskrit">Sanskrit</option>
-            <option value="Tibetan">Tibetan</option>
-            <option value="Maori">Maori</option>
-            <option value="Samoan">Samoan</option>
-            <option value="Tongan">Tongan</option>
-            <!-- Добавьте другие языки по аналогии -->
+            {% for lang in languages %}
+                <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
+            {% endfor %}
         </select>
 
         <label for="target_lang">{{ translations.target_lang_label }}:</label>
         <select name="target_lang" id="target_lang">
-            <option value="English">English</option>
-            <option value="Russian">Russian</option>
-            <option value="German">German</option>
-            <option value="Spanish">Spanish</option>
-            <option value="French">French</option>
-            <option value="Italian">Italian</option>
-            <option value="Portuguese">Portuguese</option>
-            <option value="Chinese">Chinese (Simplified)</option>
-            <option value="Chinese-Traditional">Chinese (Traditional)</option>
-            <option value="Japanese">Japanese</option>
-            <option value="Korean">Korean</option>
-            <option value="Arabic">Arabic</option>
-            <option value="Hindi">Hindi</option>
-            <option value="Bengali">Bengali</option>
-            <option value="Urdu">Urdu</option>
-            <option value="Turkish">Turkish</option>
-            <option value="Dutch">Dutch</option>
-            <option value="Greek">Greek</option>
-            <option value="Polish">Polish</option>
-            <option value="Czech">Czech</option>
-            <option value="Hungarian">Hungarian</option>
-            <option value="Swedish">Swedish</option>
-            <option value="Danish">Danish</option>
-            <option value="Finnish">Finnish</option>
-            <option value="Norwegian">Norwegian</option>
-            <option value="Hebrew">Hebrew</option>
-            <option value="Thai">Thai</option>
-            <option value="Vietnamese">Vietnamese</option>
-            <option value="Indonesian">Indonesian</option>
-            <option value="Malay">Malay</option>
-            <option value="Filipino">Filipino</option>
-            <option value="Romanian">Romanian</option>
-            <option value="Slovak">Slovak</option>
-            <option value="Bulgarian">Bulgarian</option>
-            <option value="Croatian">Croatian</option>
-            <option value="Serbian">Serbian</option>
-            <option value="Slovenian">Slovenian</option>
-            <option value="Lithuanian">Lithuanian</option>
-            <option value="Latvian">Latvian</option>
-            <option value="Estonian">Estonian</option>
-            <option value="Georgian">Georgian</option>
-            <option value="Armenian">Armenian</option>
-            <option value="Persian">Persian</option>
-            <option value="Pashto">Pashto</option>
-            <option value="Azerbaijani">Azerbaijani</option>
-            <option value="Kazakh">Kazakh</option>
-            <option value="Uzbek">Uzbek</option>
-            <option value="Tajik">Tajik</option>
-            <option value="Turkmen">Turkmen</option>
-            <option value="Kyrgyz">Kyrgyz</option>
-            <option value="Mongolian">Mongolian</option>
-            <option value="Swahili">Swahili</option>
-            <option value="Zulu">Zulu</option>
-            <option value="Xhosa">Xhosa</option>
-            <option value="Afrikaans">Afrikaans</option>
-            <option value="Haitian Creole">Haitian Creole</option>
-            <option value="Basque">Basque</option>
-            <option value="Galician">Galician</option>
-            <option value="Catalan">Catalan</option>
-            <option value="Irish">Irish</option>
-            <option value="Welsh">Welsh</option>
-            <option value="Scottish Gaelic">Scottish Gaelic</option>
-            <option value="Maltese">Maltese</option>
-            <option value="Icelandic">Icelandic</option>
-            <option value="Sanskrit">Sanskrit</option>
-            <option value="Tibetan">Tibetan</option>
-            <option value="Maori">Maori</option>
-            <option value="Samoan">Samoan</option>
-            <option value="Tongan">Tongan</option>
-            <!-- Добавьте другие языки по аналогии -->
+            {% for lang in languages %}
+                <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
+            {% endfor %}
         </select>
 
         <label for="text">{{ translations.text_label }}:</label>
@@ -246,23 +44,25 @@
 
         <button type="submit">{{ translations.translate_btn }}</button>
     </form>
-    <!-- чат переводов -->
-    {% if chat_history %}
-        <h3>{{ translations.history_label }}</h3>
-        <ul>
-            {% for chat in chat_history %}
-                <li>
-                    <strong>{{ chat.input_text }}</strong> → <em>{{ chat.translated_text }}</em>
-                    {% if chat.comment %}
-                        <br><small>{{ translations.explanation_label }}: {{ chat.comment }}</small>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>{{ translations.empty_history_label }}</p>
-    {% endif %}
     
+    <!-- чат переводов -->
+    <div class="chat-history">
+        {% if chat_history %}
+            <h3>{{ translations.history_label }}</h3>
+            <ul>
+                {% for chat in chat_history %}
+                    <li>
+                        <strong>{{ chat.input_text }}</strong> → <em>{{ chat.translated_text }}</em>
+                        {% if chat.comment %}
+                            <br><small>{{ translations.explanation_label }}: {{ chat.comment }}</small>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>{{ translations.empty_history_label }}</p>
+        {% endif %}
+    </div>
 
     {% if translation %}
     <div class="output">
@@ -283,6 +83,8 @@
         margin: auto;
         padding: 2rem;
         text-align: center;
+        margin-top: 100px;
+        margin-bottom: 50px;/* Отступ сверху, чтобы не накладывалась на header и nav */
     }
     textarea, select, button {
         width: 100%;
@@ -293,6 +95,15 @@
         background-color: #f9f9f9;
         padding: 15px;
         margin-top: 20px;
+        border-radius: 5px;
+    }
+
+    .chat-history {
+        max-height: 300px; /* Максимальная высота области с чатами */
+        overflow-y: auto;  /* Включаем вертикальную прокрутку */
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        padding: 10px;
         border-radius: 5px;
     }
 </style>
