@@ -25,7 +25,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 1000; /* Делает header поверх других элементов */
+            z-index: 1000;
         }
 
         header h1 {
@@ -34,29 +34,46 @@
 
         nav {
             background-color: #343a40;
-            padding: 1.5rem; /* Уменьшаем padding, чтобы полоска стала уже */
+            padding: 1rem 2rem;
             position: fixed;
-            top: 120px; /* Корректируем отступ, чтобы полоска не накладывалась на шапку */
+            top: 120px;
             left: 0;
             width: 100%;
-            z-index: 999; /* Навигация поверх контента, но под header */
-            box-sizing: border-box; /* Чтобы padding не сдвигал элементы */
-            text-align: center;
-            display: flex; /* Добавляем flexbox для вертикального выравнивания текста */
-            align-items: center; /* Вертикальное выравнивание элементов по центру */
-            justify-content: center; /* Горизонтальное выравнивание по центру */
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
         }
 
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a,
+        .auth-container a {
+            color: white !important;
             font-weight: bold;
-            font-size: 1.2rem; /* Увеличиваем размер шрифта */
+            text-decoration: none;
+            font-size: 1.2rem;
         }
 
-        nav a:hover {
+        .nav-links a:hover,
+        .auth-container a:hover {
             text-decoration: underline;
+        }
+
+        .auth-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: auto; /* Перемещаем вправо */
+        }
+
+        .user-info {
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
 
         .container {
@@ -66,9 +83,9 @@
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 220px; /* Создаем отступ, чтобы контент не накладывался на фиксированный header и nav */
+            margin-top: 220px;
             flex-grow: 1;
-            overflow-y: auto; /* Для прокрутки содержимого */
+            overflow-y: auto;
         }
 
         footer {
@@ -79,26 +96,7 @@
             position: fixed;
             width: 100%;
             bottom: 0;
-            z-index: 1000; /* Делает footer поверх других элементов */
-        }
-
-        .auth-links {
-            margin: 1rem 0;
-            text-align: center;
-        }
-
-        .auth-links a {
-            color: white;
-            margin: 0 10px;
-            font-size: 1.2rem;
-        }
-
-        .auth-links a:hover {
-            color: #f1f1f1;
-        }
-
-        .content {
-            min-height: 60vh;
+            z-index: 1000;
         }
 
         .alert {
@@ -123,15 +121,20 @@
 </header>
 
 <nav>
-    <a href="/">Home</a>
-    <a href="/about/">About</a>
-    <a href="/contact/">Contact</a>
-    {% if user.is_authenticated %}
-        <a href="/users/logout/">Logout</a>
-    {% else %}
-        <a href="/users/login/">Login</a>
-        <a href="/users/register/">Register</a>
-    {% endif %}
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+    </div>
+    <div class="auth-container">
+        {% if user.is_authenticated %}
+            <span class="user-info">Вы вошли как <strong>{{ user.username }}</strong></span>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </div>
 </nav>
 
 <div class="container">
@@ -144,7 +147,6 @@
     {% endif %}
     <div class="content">
         {% block content %}
-        <!-- Content will be injected here -->
         {% endblock %}
     </div>
 </div>

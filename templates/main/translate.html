@@ -13,13 +13,7 @@
         </select>
     </form>
 
-    {% if user.is_authenticated %}
-    <p>{{ translations.logged_in_text }} <strong>{{ user.username }}</strong></p>
-    <a href="{% url 'logout' %}">{{ translations.logout_btn }}</a>
-    {% else %}
-    <a href="{% url 'login' %}">{{ translations.login_btn }}</a> | <a href="{% url 'register' %}">{{ translations.register_btn }}</a>
-    {% endif %}
-
+    
     <form method="post">
         {% csrf_token %}
         <label for="source_lang">{{ translations.source_lang_label }}:</label>
