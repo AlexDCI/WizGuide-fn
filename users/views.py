@@ -14,7 +14,7 @@ def register_view(request):
             return redirect("main")  # Перенаправляем на главную страницу
     else:
         form = UserRegisterForm()
-    return render(request, "main/register.html", {"form": form})
+    return render(request, "users/register.html", {"form": form})
 
 def login_view(request):
     """Авторизация пользователя"""
@@ -26,9 +26,13 @@ def login_view(request):
             return redirect("main")  # Перенаправляем на главную страницу
     else:
         form = UserLoginForm()
-    return render(request, "main/login.html", {"form": form})
+    return render(request, "users/login.html", {"form": form})
 
 def logout_view(request):
     """Выход пользователя"""
     logout(request)
     return redirect("main")
+
+
+def require_login(request):
+    return render(request, 'users/require_login.html')
