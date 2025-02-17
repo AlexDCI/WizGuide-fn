@@ -13,6 +13,7 @@ import os
 import json
 from django.utils.translation import gettext_lazy as _
 from .services import translate_text_api, generate_comment_api, save_chat_to_db, get_user_chat_history
+from django.utils.translation import activate, get_language
 
 
 # def index(request):
@@ -121,7 +122,7 @@ languages = [
     "Maltese", "Icelandic", "Sanskrit", "Tibetan", "Maori", "Samoan", "Tongan"
 ]
 
-# Основная функция для обработки запроса на перевод
+
 # Основная функция для обработки запроса на перевод
 @login_required
 def translate_text(request):
