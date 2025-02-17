@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    
+    .login-required-box {
+        text-align: center;
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 450px;
+        margin: 4rem auto;
+        border: 1px solid #ddd;
+        
+    }
+
+    .login-required-box h2 {
+        color: #333;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        
+    }
+    .login-required-box p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 1.2rem;
+    }
+
+    .login-links a {
+        display: inline-block;
+        background-color: #007BFF;
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 1rem;
+        margin: 0 5px;
+    }
+
+    .login-links a:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="login-required-box">
+    <h2>Authentication Required</h2>
+    <p>Please register or log in to access this page.</p>
+    <div class="login-links">
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+</div>
+{% endblock %}
