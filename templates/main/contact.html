@@ -3,6 +3,7 @@
 {% block title %}Contact Us - WizGuide{% endblock %}
 
 {% block content %}
+<div class="container">
     <h2>Contact Us</h2>
     <p>We’d love to hear from you! Whether you have a question, suggestion, or just want to share your thoughts, feel free to reach out to us using the form below.</p>
 
@@ -24,10 +25,81 @@
     </form>
 
     <h3>Other Ways to Reach Us</h3>
-    <p>You can also get in touch with us through our social media profiles:</p>
-    <ul>
+    <ul class="contact-list">
+        <li><strong>Email:</strong> <a href="mailto:gluhoman555@gmail.com">gluhoman555@gmail.com</a></li>
         <li><a href="https://twitter.com/WizGuide" target="_blank"><i class="fab fa-twitter"></i> Twitter</a></li>
         <li><a href="https://facebook.com/WizGuide" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
         <li><a href="https://instagram.com/WizGuide" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+        <li><a href="https://github.com/your-github-link" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+        <li><a href="https://linkedin.com/in/your-linkedin-link" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
     </ul>
+</div>
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 2rem;
+        text-align: center;
+        margin-top: 100px;
+        margin-bottom: 50px;
+    }
+
+    form div {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .contact-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .contact-list li {
+        margin: 10px 0;
+        font-size: 1.1rem;
+    }
+
+    .contact-list a {
+        color: #007BFF;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .contact-list a:hover {
+        text-decoration: underline;
+    }
+
+    .contact-list i {
+        margin-right: 8px;
+        font-size: 1.2rem;
+    }
+</style>
 {% endblock %}

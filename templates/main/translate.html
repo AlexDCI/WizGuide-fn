@@ -1,104 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <h1>{{ translations.title }}</h1> <!-- Динамический заголовок -->
+    <h1>{{ translations.title }}</h1>
 
     <form method="get" action="">
-        <!-- Селектор языка -->
         <label for="lang">{{ translations.language_label }}:</label>
-        <select name="lang" id="lang" onchange="this.form.submit()">
+        <select name="lang" id="lang" class="form-select mb-3" onchange="this.form.submit()">
             {% for lang in languages %}
                 <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
             {% endfor %}
         </select>
     </form>
 
-    
     <form method="post">
         {% csrf_token %}
         <label for="source_lang">{{ translations.source_lang_label }}:</label>
-        <select name="source_lang" id="source_lang">
+        <select name="source_lang" id="source_lang" class="form-select mb-3">
             {% for lang in languages %}
                 <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
             {% endfor %}
         </select>
 
         <label for="target_lang">{{ translations.target_lang_label }}:</label>
-        <select name="target_lang" id="target_lang">
+        <select name="target_lang" id="target_lang" class="form-select mb-3">
             {% for lang in languages %}
                 <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
             {% endfor %}
         </select>
 
         <label for="text">{{ translations.text_label }}:</label>
-        <textarea name="text" id="text"></textarea>
+        <textarea name="text" id="text" class="form-control mb-3"></textarea>
 
         <label for="comment_request">{{ translations.comment_request_label }}:</label>
-        <textarea name="comment_request" id="comment_request" placeholder="{{ translations.optional }}"></textarea>
+        <textarea name="comment_request" id="comment_request" class="form-control mb-3" placeholder="{{ translations.optional }}"></textarea>
 
-        <button type="submit">{{ translations.translate_btn }}</button>
+        <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
     </form>
-    
-    <!-- чат переводов -->
-    <div class="chat-history">
-        {% if chat_history %}
-            <h3>{{ translations.history_label }}</h3>
-            <ul>
-                {% for chat in chat_history %}
-                    <li>
-                        <strong>{{ chat.input_text }}</strong> → <em>{{ chat.translated_text }}</em>
-                        {% if chat.comment %}
-                            <br><small>{{ translations.explanation_label }}: {{ chat.comment }}</small>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>{{ translations.empty_history_label }}</p>
-        {% endif %}
-    </div>
 
-    {% if translation %}
-    <div class="output">
-        <h3>{{ translations.translation_label }}:</h3>
-        <p>{{ translation }}</p>
-
-        {% if comment %}
-        <h3>{{ translations.explanation_label }}:</h3>
-        <p>{{ comment }}</p>
-        {% endif %}
+    {% if chat_history %}
+    <div class="chat-history mt-4 p-3 bg-light rounded">
+        <h3>{{ translations.history_label }}</h3>
+        <ul class="list-group">
+            {% for chat in chat_history %}
+                <li class="list-group-item">
+                    <strong>{{ chat.input_text }}</strong> → <em>{{ chat.translated_text }}</em>
+                    {% if chat.comment %}
+                        <br><small>{{ translations.explanation_label }}: {{ chat.comment }}</small>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
     {% endif %}
 </div>
-
-<style>
-    .container {
-        max-width: 600px;
-        margin: auto;
-        padding: 2rem;
-        text-align: center;
-        margin-top: 100px;
-        margin-bottom: 50px;/* Отступ сверху, чтобы не накладывалась на header и nav */
-    }
-    textarea, select, button {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-    .output {
-        background-color: #f9f9f9;
-        padding: 15px;
-        margin-top: 20px;
-        border-radius: 5px;
-    }
-
-    .chat-history {
-        max-height: 300px; /* Максимальная высота области с чатами */
-        overflow-y: auto;  /* Включаем вертикальную прокрутку */
-        margin-top: 20px;
-        background-color: #f9f9f9;
-        padding: 10px;
-        border-radius: 5px;
-    }
-</style>
 {% endblock %}
