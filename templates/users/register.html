@@ -2,13 +2,16 @@
 
 {% block content %}
 <style>
+    /* Обертывание формы для центрирования */
     .auth-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 80vh;
+        margin-top: 70px; /* Отступ сверху для мобильных устройств */
     }
 
+    /* Карточка с формой регистрации */
     .auth-card {
         text-align: center;
         background-color: #f8f9fa;
@@ -20,12 +23,14 @@
         border: 1px solid #ddd;
     }
 
+    /* Заголовок формы */
     .auth-title {
         color: #333;
         font-size: 1.5rem;
         margin-bottom: 1rem;
     }
 
+    /* Формы и поля ввода */
     .auth-form {
         display: flex;
         flex-direction: column;
@@ -40,6 +45,7 @@
         width: 100%;
     }
 
+    /* Кнопка отправки */
     .auth-btn {
         background-color: #007BFF;
         color: white;
@@ -53,6 +59,14 @@
     .auth-btn:hover {
         background-color: #0056b3;
     }
+
+    /* Медиазапросы для мобильных устройств */
+    @media (max-width: 768px) {
+        .auth-wrapper {
+            height: auto;
+            margin-top: 100px; /* Увеличиваем отступ сверху на мобильных устройствах */
+        }
+    }
 </style>
 
 <div class="auth-wrapper">
@@ -65,4 +79,5 @@
         </form>
     </div>
 </div>
+
 {% endblock %}
