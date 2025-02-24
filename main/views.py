@@ -14,6 +14,7 @@ import json
 from django.utils.translation import gettext_lazy as _
 from .services import translate_text_api, generate_comment_api, save_chat_to_db, get_user_chat_history
 from django.utils.translation import activate, get_language
+from django.http import HttpResponseServerError
 
 
 # def index(request):
@@ -161,3 +162,15 @@ def translate_text(request):
         "chat_history": chat_history,  # Передаем историю чатов
         "languages": languages  # Передаем список языков для выбора
     })
+
+
+@login_required
+def clear_chat(request):
+    try:
+        # Удаляем все записи истории чатов для текущего пользователя
+        ChatHistory.objects.filter(user=request.user).delete()
+
+        # Перенаправляем пользователя обратно на главную страницу перевода
+        return redirect('translate_text')
+    except Exception as e:
+        return HttpResponseServerError(f"Произошла ошибка: {str(e)}")
