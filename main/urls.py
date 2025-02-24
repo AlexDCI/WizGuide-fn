@@ -9,4 +9,5 @@ urlpatterns = [
     path('translate/', views.translate_text, name='translate_text'),
     path('about/', views.about, name='about'),  # Для страницы About
     path('contact/', views.contact, name='contact'),  # Для страницы Contact
+    path('clear_chat/', views.clear_chat, name='clear_chat'),  # Очистка чата
 ]
