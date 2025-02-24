@@ -155,11 +155,9 @@ def translate_text(request):
     # Возвращаем форму с выбранным языком (если не POST)
     return render(request, "main/translate.html", {
         "translations": translations,  # Передаем переводы в шаблон
-        "selected_lang": selected_lang,  # Передаем текущий выбранный язык
-        "source_lang": source_lang,  # Берем язык из GET-запроса или по умолчанию
-        "target_lang": target_lang,  # Берем язык из GET-запроса или по умолчанию
-        "chat_history": chat_history,  # Передаем историю
-        "languages": languages  # Передаем список языков
+        "selected_lang": selected_lang,  # Передаем текущий выбранный язык интерфейса
+        "source_lang": source_lang,  # Исходный язык
+        "target_lang": target_lang,  # Целевой язык
+        "chat_history": chat_history,  # Передаем историю чатов
+        "languages": languages  # Передаем список языков для выбора
     })
-
-

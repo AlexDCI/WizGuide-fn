@@ -17,26 +17,27 @@
         <label for="source_lang">{{ translations.source_lang_label }}:</label>
         <select name="source_lang" id="source_lang" class="form-select mb-3">
             {% for lang in languages %}
-                <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
+                <option value="{{ lang }}" {% if source_lang == lang %}selected{% endif %}>{{ lang }}</option>
             {% endfor %}
         </select>
-
+    
         <label for="target_lang">{{ translations.target_lang_label }}:</label>
         <select name="target_lang" id="target_lang" class="form-select mb-3">
             {% for lang in languages %}
-                <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
+                <option value="{{ lang }}" {% if target_lang == lang %}selected{% endif %}>{{ lang }}</option>
             {% endfor %}
         </select>
-
+    
         <label for="text">{{ translations.text_label }}:</label>
         <textarea name="text" id="text" class="form-control mb-3"></textarea>
-
+    
         <label for="comment_request">{{ translations.comment_request_label }}:</label>
         <textarea name="comment_request" id="comment_request" class="form-control mb-3" placeholder="{{ translations.optional }}"></textarea>
-
+    
         <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
     </form>
-
+    
+    
     <style>
         .chat-history {
             max-height: 300px; /* Ограничение высоты */
