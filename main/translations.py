@@ -1,3 +1,20 @@
+# Список доступных языков
+languages = [
+    "English", "Russian", "German", "Spanish", "French", "Italian", 
+    "Portuguese", "Chinese", "Chinese-Traditional", "Japanese", "Korean", 
+    "Arabic", "Hindi", "Bengali", "Urdu", "Turkish", "Dutch", "Greek", 
+    "Polish", "Czech", "Hungarian", "Swedish", "Danish", "Finnish", "Norwegian", 
+    "Hebrew", "Thai", "Vietnamese", "Indonesian", "Malay", "Filipino", 
+    "Romanian", "Slovak", "Bulgarian", "Croatian", "Serbian", "Slovenian", 
+    "Lithuanian", "Latvian", "Estonian", "Georgian", "Armenian", "Persian", 
+    "Pashto", "Azerbaijani", "Kazakh", "Uzbek", "Tajik", "Turkmen", "Kyrgyz", 
+    "Mongolian", "Swahili", "Zulu", "Xhosa", "Afrikaans", "Haitian Creole", 
+    "Basque", "Galician", "Catalan", "Irish", "Welsh", "Scottish Gaelic", 
+    "Maltese", "Icelandic", "Sanskrit", "Tibetan", "Maori", "Samoan", "Tongan"
+]
+
+
+
 TRANSLATIONS = {
     "English": {
         "title": "Translation App",
