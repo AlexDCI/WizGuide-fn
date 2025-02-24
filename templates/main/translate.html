@@ -37,6 +37,13 @@
         <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
     </form>
 
+    <style>
+        .chat-history {
+            max-height: 300px; /* Ограничение высоты */
+            overflow-y: auto; /* Добавляет вертикальный скролл */
+        }
+    </style>
+
     {% if chat_history %}
     <div class="chat-history mt-4 p-3 bg-light rounded">
         <h3>{{ translations.history_label }}</h3>
@@ -53,4 +60,13 @@
     </div>
     {% endif %}
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var chatHistory = document.querySelector(".chat-history");
+        if (chatHistory) {
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+    });
+</script>
 {% endblock %}
