@@ -37,11 +37,28 @@
         <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
     </form>
     
-    
+    <!-- Кнопка для очистки чата -->
+    <form method="post" action="{% url 'clear_chat' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger w-100 mt-3 custom-clear-btn">
+            Clear Chat
+        </button>
+    </form>
+
     <style>
         .chat-history {
             max-height: 300px; /* Ограничение высоты */
             overflow-y: auto; /* Добавляет вертикальный скролл */
+        }
+
+        /* Новый стиль для кнопки очистки */
+        .custom-clear-btn {
+            height: 40px;  /* Уменьшаем высоту кнопки */
+            padding: 5px 20px;  /* Добавляем отступы по бокам для уменьшения ширины */
+            font-size: 14px;  /* Уменьшаем шрифт */
+            line-height: 30px;  /* Центрируем текст по вертикали */
+            width: 200px;  /* Фиксированная ширина кнопки */
+            margin: 0 auto;  /* Центрируем кнопку по горизонтали */
         }
     </style>
 
