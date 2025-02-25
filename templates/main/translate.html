@@ -3,20 +3,14 @@
 <div class="container">
     <h1>{{ translations.title }}</h1>
 
-    <!-- Форма выбора языка интерфейса -->
-    <form method="get" action="">
-        <label for="lang">{{ translations.language_label }}:</label>
-        <select name="lang" id="lang" class="form-select mb-3" onchange="this.form.submit()">
-            {% for lang in languages %}
-                <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
-            {% endfor %}
-        </select>
-    </form>
-
     <form method="post">
         {% csrf_token %}
-        
-        <!-- Горизонтальное расположение выбора языков -->
+
+        <!-- Поле ввода текста -->
+        <label for="text">{{ translations.text_label }}:</label>
+        <textarea name="text" id="text" class="form-control mb-3 text-area-large"></textarea>
+
+        <!-- Блок выбора языков (под полем ввода) -->
         <div class="d-flex align-items-center mb-3">
             <label for="source_lang" class="me-2">{{ translations.source_lang_label }}:</label>
             <select name="source_lang" id="source_lang" class="form-select">
@@ -36,13 +30,9 @@
             </select>
         </div>
 
-        <!-- Поле ввода текста -->
-        <label for="text">{{ translations.text_label }}:</label>
-        <textarea name="text" id="text" class="form-control mb-3 text-area-large"></textarea>
-
         <!-- Поле ввода комментария -->
         <label for="comment_request">{{ translations.comment_request_label }}:</label>
-        <textarea name="comment_request" id="comment_request" class="form-control mb-3" placeholder="{{ translations.optional }}"></textarea>
+        <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-large" placeholder="{{ translations.optional }}"></textarea>
 
         <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
     </form>
@@ -54,48 +44,6 @@
             Clear Chat
         </button>
     </form>
-
-    <style>
-        /* Увеличение высоты поля ввода текста */
-        .text-area-large {
-            height: 200px; /* Можно менять на любое другое значение */
-            resize: vertical; /* Позволяет пользователю растягивать */
-        }
-
-        /* Стили для контейнера чата */
-        .chat-history {
-            max-height: 400px; /* Увеличенная высота блока */
-            overflow-y: auto; /* Вертикальный скролл */
-            width: 100%; /* Чат теперь занимает всю ширину */
-        }
-
-        /* Чаты на всю ширину */
-        .list-group-item {
-            width: 100%; /* Растягивает элементы списка */
-            word-wrap: break-word; /* Перенос длинных слов */
-        }
-
-        /* Стили для кнопки очистки */
-        .custom-clear-btn {
-            height: 40px;
-            padding: 5px 20px;
-            font-size: 14px;
-            line-height: 30px;
-            width: 200px;
-            margin: 0 auto;
-        }
-
-        /* Центрирование селектов */
-        .d-flex.align-items-center select {
-            min-width: 200px;
-        }
-
-        /* Размер кнопки смены языка */
-        #swap-languages {
-            font-size: 18px;
-            padding: 5px 15px;
-        }
-    </style>
 
     {% if chat_history %}
     <div class="chat-history mt-4 p-3 bg-light rounded">
@@ -114,14 +62,29 @@
     {% endif %}
 </div>
 
+<style>
+    /* Увеличенное поле ввода текста */
+    .text-area-large {
+        height: 400px;
+        resize: vertical;
+    }
+
+    /* Увеличенное поле ввода комментариев */
+    .comment-area-large {
+        height: 200px;
+        resize: vertical;
+    }
+
+    /* Стили для контейнера чата */
+    .chat-history {
+        max-height: 400px;
+        overflow-y: auto;
+        width: 100%;
+    }
+</style>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var chatHistory = document.querySelector(".chat-history");
-        if (chatHistory) {
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }
-
-        // Функция смены языков
         document.getElementById("swap-languages").addEventListener("click", function () {
             let sourceLang = document.getElementById("source_lang");
             let targetLang = document.getElementById("target_lang");
