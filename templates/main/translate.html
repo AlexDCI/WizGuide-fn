@@ -3,64 +3,47 @@
 <div class="container">
     <h1>{{ translations.title }}</h1>
 
-    <form method="get" action="">
-        <label for="lang">{{ translations.language_label }}:</label>
-        <select name="lang" id="lang" class="form-select mb-3" onchange="this.form.submit()">
-            {% for lang in languages %}
-                <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
-            {% endfor %}
-        </select>
-    </form>
-
     <form method="post">
         {% csrf_token %}
-        <label for="source_lang">{{ translations.source_lang_label }}:</label>
-        <select name="source_lang" id="source_lang" class="form-select mb-3">
-            {% for lang in languages %}
-                <option value="{{ lang }}" {% if source_lang == lang %}selected{% endif %}>{{ lang }}</option>
-            {% endfor %}
-        </select>
-    
-        <label for="target_lang">{{ translations.target_lang_label }}:</label>
-        <select name="target_lang" id="target_lang" class="form-select mb-3">
-            {% for lang in languages %}
-                <option value="{{ lang }}" {% if target_lang == lang %}selected{% endif %}>{{ lang }}</option>
-            {% endfor %}
-        </select>
-    
+
+        <!-- Поле ввода текста -->
         <label for="text">{{ translations.text_label }}:</label>
-        <textarea name="text" id="text" class="form-control mb-3"></textarea>
-    
+        <textarea name="text" id="text" class="form-control mb-3 text-area-large"></textarea>
+
+        <!-- Блок выбора языков (под полем ввода) -->
+        <div class="d-flex align-items-center mb-3">
+            <label for="source_lang" class="me-2">{{ translations.source_lang_label }}:</label>
+            <select name="source_lang" id="source_lang" class="form-select">
+                {% for lang in languages %}
+                    <option value="{{ lang }}" {% if source_lang == lang %}selected{% endif %}>{{ lang }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Кнопка смены языков -->
+            <button type="button" id="swap-languages" class="btn btn-secondary mx-2">↔</button>
+
+            <label for="target_lang" class="me-2">{{ translations.target_lang_label }}:</label>
+            <select name="target_lang" id="target_lang" class="form-select">
+                {% for lang in languages %}
+                    <option value="{{ lang }}" {% if target_lang == lang %}selected{% endif %}>{{ lang }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Поле ввода комментария -->
         <label for="comment_request">{{ translations.comment_request_label }}:</label>
-        <textarea name="comment_request" id="comment_request" class="form-control mb-3" placeholder="{{ translations.optional }}"></textarea>
-    
+        <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-large" placeholder="{{ translations.optional }}"></textarea>
+
         <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
     </form>
     
-    <!-- Кнопка для очистки чата -->
+    <!-- Кнопка очистки чата -->
     <form method="post" action="{% url 'clear_chat' %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger w-100 mt-3 custom-clear-btn">
             Clear Chat
         </button>
     </form>
-
-    <style>
-        .chat-history {
-            max-height: 300px; /* Ограничение высоты */
-            overflow-y: auto; /* Добавляет вертикальный скролл */
-        }
-
-        /* Новый стиль для кнопки очистки */
-        .custom-clear-btn {
-            height: 40px;  /* Уменьшаем высоту кнопки */
-            padding: 5px 20px;  /* Добавляем отступы по бокам для уменьшения ширины */
-            font-size: 14px;  /* Уменьшаем шрифт */
-            line-height: 30px;  /* Центрируем текст по вертикали */
-            width: 200px;  /* Фиксированная ширина кнопки */
-            margin: 0 auto;  /* Центрируем кнопку по горизонтали */
-        }
-    </style>
 
     {% if chat_history %}
     <div class="chat-history mt-4 p-3 bg-light rounded">
@@ -79,12 +62,37 @@
     {% endif %}
 </div>
 
+<style>
+    /* Увеличенное поле ввода текста */
+    .text-area-large {
+        height: 400px;
+        resize: vertical;
+    }
+
+    /* Увеличенное поле ввода комментариев */
+    .comment-area-large {
+        height: 200px;
+        resize: vertical;
+    }
+
+    /* Стили для контейнера чата */
+    .chat-history {
+        max-height: 400px;
+        overflow-y: auto;
+        width: 100%;
+    }
+</style>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var chatHistory = document.querySelector(".chat-history");
-        if (chatHistory) {
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }
+        document.getElementById("swap-languages").addEventListener("click", function () {
+            let sourceLang = document.getElementById("source_lang");
+            let targetLang = document.getElementById("target_lang");
+
+            let temp = sourceLang.value;
+            sourceLang.value = targetLang.value;
+            targetLang.value = temp;
+        });
     });
 </script>
 {% endblock %}
