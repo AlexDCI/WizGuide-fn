@@ -14,19 +14,27 @@
 
     <form method="post">
         {% csrf_token %}
-        <label for="source_lang">{{ translations.source_lang_label }}:</label>
-        <select name="source_lang" id="source_lang" class="form-select mb-3">
-            {% for lang in languages %}
-                <option value="{{ lang }}" {% if source_lang == lang %}selected{% endif %}>{{ lang }}</option>
-            {% endfor %}
-        </select>
-    
-        <label for="target_lang">{{ translations.target_lang_label }}:</label>
-        <select name="target_lang" id="target_lang" class="form-select mb-3">
-            {% for lang in languages %}
-                <option value="{{ lang }}" {% if target_lang == lang %}selected{% endif %}>{{ lang }}</option>
-            {% endfor %}
-        </select>
+        
+        <div class="d-flex align-items-center mb-3">
+            <!-- Исходный язык -->
+            <label for="source_lang" class="me-2">{{ translations.source_lang_label }}:</label>
+            <select name="source_lang" id="source_lang" class="form-select">
+                {% for lang in languages %}
+                    <option value="{{ lang }}" {% if source_lang == lang %}selected{% endif %}>{{ lang }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Кнопка реверса -->
+            <button type="button" id="swap-languages" class="btn btn-secondary mx-2">↔</button>
+
+            <!-- Целевой язык -->
+            <label for="target_lang" class="me-2">{{ translations.target_lang_label }}:</label>
+            <select name="target_lang" id="target_lang" class="form-select">
+                {% for lang in languages %}
+                    <option value="{{ lang }}" {% if target_lang == lang %}selected{% endif %}>{{ lang }}</option>
+                {% endfor %}
+            </select>
+        </div>
     
         <label for="text">{{ translations.text_label }}:</label>
         <textarea name="text" id="text" class="form-control mb-3"></textarea>
@@ -37,11 +45,37 @@
         <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
     </form>
     
-    
+    <!-- Кнопка для очистки чата -->
+    <form method="post" action="{% url 'clear_chat' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger w-100 mt-3 custom-clear-btn">
+            Clear Chat
+        </button>
+    </form>
+
     <style>
         .chat-history {
-            max-height: 300px; /* Ограничение высоты */
-            overflow-y: auto; /* Добавляет вертикальный скролл */
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .custom-clear-btn {
+            height: 40px;
+            padding: 5px 20px;
+            font-size: 14px;
+            line-height: 30px;
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        /* Центрирование элементов в строке */
+        .d-flex.align-items-center select {
+            min-width: 150px;
+        }
+
+        #swap-languages {
+            font-size: 18px;
+            padding: 5px 15px;
         }
     </style>
 
@@ -68,6 +102,16 @@
         if (chatHistory) {
             chatHistory.scrollTop = chatHistory.scrollHeight;
         }
+
+        // Функция смены языков
+        document.getElementById("swap-languages").addEventListener("click", function () {
+            let sourceLang = document.getElementById("source_lang");
+            let targetLang = document.getElementById("target_lang");
+
+            let temp = sourceLang.value;
+            sourceLang.value = targetLang.value;
+            targetLang.value = temp;
+        });
     });
 </script>
 {% endblock %}
