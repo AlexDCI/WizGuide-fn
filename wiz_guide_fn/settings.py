@@ -38,7 +38,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'  # Преобразуем строку в булевое значение
 
 # ALLOWED_HOSTS = ['167.71.34.6', 'localhost', '127.0.0.1'] # host for production
-ALLOWED_HOSTS = ['192.168.0.7', 'localhost', '127.0.0.1'] # host for localhost
+ALLOWED_HOSTS = ['192.168.0.2', 'localhost', '127.0.0.1'] # host for localhost
 
 
 
