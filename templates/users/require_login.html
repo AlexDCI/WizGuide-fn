@@ -1,8 +1,8 @@
 {% extends "base.html" %}
+{% load socialaccount %}  
 
 {% block content %}
 <style>
-    
     .login-required-box {
         text-align: center;
         background-color: #f8f9fa;
@@ -12,15 +12,14 @@
         max-width: 450px;
         margin: 4rem auto;
         border: 1px solid #ddd;
-        
     }
 
     .login-required-box h2 {
         color: #333;
         font-size: 1.5rem;
         margin-bottom: 1rem;
-        
     }
+
     .login-required-box p {
         font-size: 1rem;
         color: #555;
@@ -41,6 +40,31 @@
     .login-links a:hover {
         background-color: #0056b3;
     }
+
+    .google-btn {
+        background-color: #db4437;
+        color: white;
+        padding: 0.7rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+        margin-top: 10px;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .google-btn:hover {
+        background-color: #c1351d;
+        transform: scale(1.05);
+    }
+
+    .google-btn img {
+        margin-right: 10px;
+    }
 </style>
 
 <div class="login-required-box">
@@ -50,5 +74,11 @@
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'register' %}">Register</a>
     </div>
+    
+    <p>Or login with:</p>
+    <a href="{% provider_login_url 'google' %}" class="google-btn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" width="20" height="20">
+        Sign up with Google
+    </a>
 </div>
 {% endblock %}
