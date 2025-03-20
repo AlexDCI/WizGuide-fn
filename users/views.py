@@ -3,6 +3,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from .forms import UserRegisterForm, UserLoginForm
+from django.contrib.auth import get_user_model
+import logging
+logger = logging.getLogger(__name__)
 
 def register_view(request):
     """Регистрация пользователя"""
@@ -10,11 +13,14 @@ def register_view(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+            # Явно указываем backend после создания пользователя
+            user.backend = 'django.contrib.auth.backends.ModelBackend'  # Используем стандартный backend
             login(request, user)
             return redirect("main")  # Перенаправляем на главную страницу
     else:
         form = UserRegisterForm()
     return render(request, "users/register.html", {"form": form})
+
 
 def login_view(request):
     """Авторизация пользователя"""
@@ -36,3 +42,4 @@ def logout_view(request):
 
 def require_login(request):
     return render(request, 'users/require_login.html')
+
