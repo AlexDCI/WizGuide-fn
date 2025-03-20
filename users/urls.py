@@ -10,3 +10,4 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),
     path("require-login/", require_login, name='require_login'),
 ]
+

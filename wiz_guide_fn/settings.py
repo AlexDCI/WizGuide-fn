@@ -35,13 +35,22 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+<<<<<<< HEAD
 DEBUG = os.getenv('DEBUG', 'False') == 'True'  # Преобразуем строку в булевое значение
 
 ALLOWED_HOSTS = ['167.71.34.6', 'localhost', '127.0.0.1'] # host for production
 
 # ALLOWED_HOSTS = ['192.168.0.2', 'localhost', '127.0.0.1'] # host for localhost
 
+=======
+# DEBUG = os.getenv('DEBUG', 'False') == 'True'  # Преобразуем строку в булевое значение
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
+# ALLOWED_HOSTS = ['167.71.34.6', 'localhost', '127.0.0.1'] # host for production
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+>>>>>>> 1f776b5... redy to launch
+
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost").split(",")
 
 
 # Application definition
@@ -96,8 +105,12 @@ WSGI_APPLICATION = 'wiz_guide_fn.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'wizguide_bd'),
+        'USER': os.getenv('POSTGRES_USER', 'wizguide_user'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'supersecurepassword'),
+        'HOST': os.getenv('DB_HOST', 'db'),  # Подключаемся к контейнеру db
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -142,6 +155,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Добавляем путь к статическим файлам
+]
 # # Директория на вашем сервере, где будут собираться статические файлы
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
@@ -159,4 +175,32 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/users/require-login/'
 
 
+
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+<<<<<<< HEAD
+=======
+
+
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',  # allauth backend
+    'django.contrib.auth.backends.ModelBackend',  # стандартный backend
+]
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+LOGIN_REDIRECT_URL = '/'  # Куда перенаправлять после входа
+LOGOUT_REDIRECT_URL = '/'  # Куда после выхода
+
+# Новый формат настроек django-allauth
+ACCOUNT_LOGIN_METHODS = {'username', 'email'}  # Разрешает вход по email и username
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']  # Обязательные поля при регистрации
+ACCOUNT_EMAIL_VERIFICATION = "none"  # Можно изменить на "optional" или "mandatory"
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+    }
+}
+
+>>>>>>> 1f776b5... redy to launch
