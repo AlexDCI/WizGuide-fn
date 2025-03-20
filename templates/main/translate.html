@@ -31,6 +31,7 @@
                     {% endfor %}
                 </select>
             </div>
+<<<<<<< HEAD
 
             <!-- Поле ввода комментария -->
             <label for="comment_request">{{ translations.comment_request_label }}:</label>
@@ -39,6 +40,16 @@
             <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
         </form>
 
+=======
+
+            <!-- Поле ввода комментария -->
+            <label for="comment_request">{{ translations.comment_request_label }}:</label>
+            <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-large" placeholder="{{ translations.optional }}"></textarea>
+
+            <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
+        </form>
+
+>>>>>>> dd72c19... impruve frontend with forms
         <!-- Кнопка очистки чата -->
         <form method="post" action="{% url 'clear_chat' %}">
             {% csrf_token %}
@@ -125,6 +136,16 @@
         /* Уменьшаем минимальную ширину формы на мобильных */
         .text-area-large, .comment-area-large, .chat-history {
             min-width: 95%; /* Теперь формы и чат занимают 90% от ширины экрана */
+        }
+
+
+        /* Уменьшаем высоту полей ввода на мобильных устройствах */
+        .text-area-large {
+            height: 200px; /* Уменьшаем высоту поля ввода текста на мобильных */
+        }
+
+        .comment-area-large {
+            height: 100px; /* Уменьшаем высоту поля ввода комментария на мобильных */
         }
 
         /* Уменьшаем боковые отступы для мобильных */

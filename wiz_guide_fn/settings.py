@@ -35,20 +35,14 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-<<<<<<< HEAD
-DEBUG = os.getenv('DEBUG', 'False') == 'True'  # Преобразуем строку в булевое значение
 
-ALLOWED_HOSTS = ['167.71.34.6', 'localhost', '127.0.0.1'] # host for production
-
-# ALLOWED_HOSTS = ['192.168.0.2', 'localhost', '127.0.0.1'] # host for localhost
-
-=======
 # DEBUG = os.getenv('DEBUG', 'False') == 'True'  # Преобразуем строку в булевое значение
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 # ALLOWED_HOSTS = ['167.71.34.6', 'localhost', '127.0.0.1'] # host for production
+
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
->>>>>>> 1f776b5... redy to launch
+
 
 CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost").split(",")
 
@@ -177,8 +171,6 @@ LOGIN_URL = '/users/require-login/'
 
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-<<<<<<< HEAD
-=======
 
 
 AUTHENTICATION_BACKENDS = [
@@ -203,4 +195,3 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
->>>>>>> 1f776b5... redy to launch
