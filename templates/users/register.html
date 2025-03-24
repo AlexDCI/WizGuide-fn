@@ -67,6 +67,23 @@
             margin-top: 100px; /* Увеличиваем отступ сверху на мобильных устройствах */
         }
     }
+
+    .auth-btn.google-btn {
+    background-color: #4285f4;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-btn.google-btn:hover {
+    background-color: #357ae8;
+}
 </style>
 
 <div class="auth-wrapper">
@@ -77,6 +94,9 @@
             {{ form.as_p }}
             <button type="submit" class="auth-btn">Register</button>
         </form>
+        <a href="{% url 'google_login' %}" class="auth-btn google-btn">
+            Login with Google
+        </a>
     </div>
 </div>
 

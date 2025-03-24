@@ -41,6 +41,23 @@
     .login-links a:hover {
         background-color: #0056b3;
     }
+
+    .auth-btn.google-btn {
+    background-color: #4285f4;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-btn.google-btn:hover {
+    background-color: #357ae8;
+}
 </style>
 
 <div class="login-required-box">
@@ -49,6 +66,9 @@
     <div class="login-links">
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'google_login' %}" class="auth-btn google-btn">
+            Login with Google
+        </a>
     </div>
 </div>
 {% endblock %}
