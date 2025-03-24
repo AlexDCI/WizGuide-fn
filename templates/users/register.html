@@ -82,6 +82,23 @@
     .google-btn img {
         margin-right: 10px;
     }
+
+    .auth-btn.google-btn {
+    background-color: #4285f4;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.auth-btn.google-btn:hover {
+    background-color: #357ae8;
+}
 </style>
 
 <div class="auth-wrapper">
@@ -92,11 +109,9 @@
             {{ form.as_p }}
             <button type="submit" class="auth-btn">Register</button>
         </form>
+        <a href="{% url 'google_login' %}" class="auth-btn google-btn">
+            Login with Google
 
-        <p>Or sign up with:</p>
-        <a href="{% provider_login_url 'google' %}" class="google-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" width="20" height="20">
-            Sign up with Google
         </a>
     </div>
 </div>
