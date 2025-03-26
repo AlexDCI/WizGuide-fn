@@ -1,84 +1,23 @@
 {% extends "base.html" %}
-{% load socialaccount %}  
+{% load static socialaccount %}
 
 {% block content %}
-<style>
-    .login-required-box {
-        text-align: center;
-        background-color: #f8f9fa;
-        padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        max-width: 450px;
-        margin: 4rem auto;
-        border: 1px solid #ddd;
-    }
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
 
-    .login-required-box h2 {
-        color: #333;
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .login-required-box p {
-        font-size: 1rem;
-        color: #555;
-        margin-bottom: 1.2rem;
-    }
-
-    .login-links a {
-        display: inline-block;
-        background-color: #007BFF;
-        color: white;
-        padding: 0.6rem 1.2rem;
-        border-radius: 4px;
-        text-decoration: none;
-        font-size: 1rem;
-        margin: 0 5px;
-    }
-
-    .login-links a:hover {
-        background-color: #0056b3;
-    }
-
-    .google-btn {
-        background-color: #db4437;
-        color: white;
-        padding: 0.7rem;
-        border: none;
-        border-radius: 4px;
-        font-size: 1rem;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        text-align: center;
-        width: 100%;
-        margin-top: 10px;
-        transition: background-color 0.3s, transform 0.3s;
-    }
-
-    .google-btn:hover {
-        background-color: #c1351d;
-        transform: scale(1.05);
-    }
-
-    .google-btn img {
-        margin-right: 10px;
-    }
-</style>
-
-<div class="login-required-box">
-    <h2>Authentication Required</h2>
-    <p>Please register or log in to access this page.</p>
-    <div class="login-links">
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'register' %}">Register</a>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2 class="auth-title">Authentication Required</h2>
+        <p>Please register or log in to access this page.</p>
+        <div class="login-links">
+            <a href="{% url 'login' %}" class="auth-btn">Login</a>
+            <a href="{% url 'register' %}" class="auth-btn">Register</a>
+        </div>
+        
+        <p>Or login with:</p>
+        <a href="{% provider_login_url 'google' %}" class="google-btn">
+            <img src="{% static 'images/google_logo.png' %}" alt="Google Logo">
+            Sign in with Google
+        </a>
     </div>
-    
-    <p>Or login with:</p>
-    <a href="{% provider_login_url 'google' %}" class="google-btn">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" width="20" height="20">
-        Sign up with Google
-    </a>
 </div>
 {% endblock %}
