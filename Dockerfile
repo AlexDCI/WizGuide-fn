@@ -1,6 +1,11 @@
 # Используем официальный образ Python
 FROM python:3.11-slim
 
+# Устанавливаем зависимости для PostgreSQL и другие необходимые пакеты
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
 
