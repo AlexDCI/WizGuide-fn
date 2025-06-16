@@ -24,7 +24,6 @@ DEBUG = True #os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')  # П�
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost").split(",")
 
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -46,7 +45,6 @@ INSTALLED_APPS = [
     'django_extensions',
 ]
 
-SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -148,7 +146,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Маршрут для авторизации пользователей
 LOGIN_URL = '/users/require-login/'
 
-SITE_ID = 7
+SITE_ID = int(os.getenv("SITE_ID", 1))
 
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
