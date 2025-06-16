@@ -146,7 +146,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Маршрут для авторизации пользователей
 LOGIN_URL = '/users/require-login/'
 
-SITE_ID = int(os.getenv("SITE_ID", 1))
+SITE_ID = 7
+
 
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
