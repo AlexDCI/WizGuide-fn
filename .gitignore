@@ -1,6 +1,8 @@
 # Игнорируем файл с секретами
 .env
 
+wiz_guide_fn/wiz_guide_fn/settings.py
+
 # Игнорируем файлы Python
 *.pyc
 __pycache__/
@@ -14,3 +16,4 @@ venv/
 
 # Игнорируем базы данных
 db.sqlite3
+

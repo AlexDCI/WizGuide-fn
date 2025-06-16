@@ -1,7 +1,8 @@
 {% extends "base.html" %}
-{% load socialaccount %}  
+{% load static socialaccount %}
 
 {% block content %}
+<<<<<<< HEAD
 <style>
     .auth-wrapper {
         display: flex;
@@ -100,6 +101,9 @@
     background-color: #357ae8;
 }
 </style>
+=======
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+>>>>>>> temporary-branch
 
 <div class="auth-wrapper">
     <div class="auth-card">
@@ -112,6 +116,13 @@
         <a href="{% url 'google_login' %}" class="auth-btn google-btn">
             Login with Google
 
+<<<<<<< HEAD
+=======
+        <p>Or login with:</p>
+        <a href="{% provider_login_url 'google' %}" class="google-btn">
+            <img src="{% static 'images/google_logo.png' %}" alt="Google Logo">
+            Sign in with Google
+>>>>>>> temporary-branch
         </a>
     </div>
 </div>

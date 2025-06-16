@@ -15,17 +15,20 @@ services:
       - .env  
 
   db:
-  image: postgres:15
-  restart: always
-  env_file:
-    - .env  # Здесь указаны переменные, как например POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD
-  environment:
-    PGDATA: /var/lib/postgresql/data/pgdata  # Указываем директорию для хранения данных PostgreSQL
-  volumes:
-    - postgres_data:/var/lib/postgresql/data  # Для сохранения данных между перезапусками
-  ports:
-    - "5432:5432"
-  healthcheck:
-    test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-    interval: 10s
-    retries: 5
+    image: postgres:15
+    restart: always
+    env_file:
+      - .env
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata  
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 5
+
+volumes:
+  postgres_data:
