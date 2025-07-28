@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Contact Us - WizGuide{% endblock %}
 
 {% block content %}
-<div class="container">
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+
+<div class="container contact-container">
     <h2>Contact Us</h2>
     <p>We’d love to hear from you! Whether you have a question, suggestion, or just want to share your thoughts, feel free to reach out to us using the form below.</p>
 
@@ -34,72 +37,4 @@
         <li><a href="https://linkedin.com/in/your-linkedin-link" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
     </ul>
 </div>
-
-<style>
-    .container {
-        max-width: 600px;
-        margin: auto;
-        padding: 2rem;
-        text-align: center;
-        margin-top: 100px;
-        margin-bottom: 50px;
-    }
-
-    form div {
-        margin-bottom: 15px;
-    }
-
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    input, textarea {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-
-    button {
-        width: 100%;
-        padding: 10px;
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 1rem;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-    }
-
-    .contact-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .contact-list li {
-        margin: 10px 0;
-        font-size: 1.1rem;
-    }
-
-    .contact-list a {
-        color: #007BFF;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    .contact-list a:hover {
-        text-decoration: underline;
-    }
-
-    .contact-list i {
-        margin-right: 8px;
-        font-size: 1.2rem;
-    }
-</style>
 {% endblock %}

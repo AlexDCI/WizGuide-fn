@@ -3,18 +3,14 @@
 
 {% block content %}
 <div class="container-fluid d-flex justify-content-center p-0">
-    <!-- Контейнер формы с ограниченной шириной -->
     <div class="form-container">
         <h1>{{ translations.title }}</h1>
 
         <form method="post">
             {% csrf_token %}
-
-            <!-- Поле ввода текста -->
             <label for="text">{{ translations.text_label }}:</label>
             <textarea name="text" id="text" class="form-control mb-3 text-area-large"></textarea>
 
-            <!-- Блок выбора языков (под полем ввода) -->
             <div class="d-flex align-items-center mb-3">
                 <select name="source_lang" id="source_lang" class="form-select">
                     <option value="" disabled {% if not source_lang %}selected{% endif %}>Выберите язык</option>
@@ -23,7 +19,6 @@
                     {% endfor %}
                 </select>
 
-                <!-- Кнопка смены языков -->
                 <button type="button" id="swap-languages" class="btn btn-secondary mx-2">↔</button>
 
                 <select name="target_lang" id="target_lang" class="form-select">
@@ -34,24 +29,16 @@
                 </select>
             </div>
 
-            <!-- Поле ввода комментария -->
             <label for="comment_request">{{ translations.comment_request_label }}:</label>
             <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-large" placeholder="{{ translations.optional }}"></textarea>
 
             <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
         </form>
 
-        <!-- Кнопка очистки чата -->
         <form method="post" action="{% url 'clear_chat' %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger w-100 mt-3 custom-clear-btn">Clear Chat</button>
         </form>
-       
-        <script src="{% static 'js/translation_redirect.js' %}"></script>
-        
-
-
-
 
         {% if chat_history %}
         <div class="chat-history mt-4 p-3 bg-light rounded">
@@ -71,82 +58,7 @@
     </div>
 </div>
 
-
-<style>
-    /* Твой CSS тут, без изменений */
-    .container-fluid {
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        overflow-x: hidden;
-    }
-    .form-container {
-        width: 100%;
-        max-width: 800px;
-        min-width: 480px;
-        margin: 0 auto;
-        padding: 0 15px;
-        box-sizing: border-box;
-        overflow: hidden;
-    }
-    .text-area-large, .comment-area-large {
-        width: 100%;
-        resize: both;
-        min-width: 400px;
-        max-width: 100%;
-        margin: 0 0 15px 0;
-        box-sizing: border-box;
-    }
-    .text-area-large { height: 400px; }
-    .comment-area-large { height: 200px; }
-    .chat-history {
-        max-height: 400px;
-        overflow-y: auto;
-        width: 100%;
-        resize: horizontal;
-        box-sizing: border-box;
-        min-width: 400px;
-        max-width: 100%;
-    }
-    @media (max-width: 768px) {
-        .form-container {
-            width: 100%;
-            max-width: 100%;
-            min-width: 100%;
-            padding: 0 5px;
-        }
-        .text-area-large, .comment-area-large, .chat-history {
-            min-width: 95%;
-        }
-        .form-container {
-            padding: 0 3%;
-        }
-    }
-</style>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Прокрутка к истории переводов, если она есть
-    var chatHistory = document.querySelector('.chat-history');
-    if (chatHistory) {
-        setTimeout(function() {
-            chatHistory.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 200);
-    }
-
-    // Кнопка смены языков
-    var swapBtn = document.getElementById("swap-languages");
-    if (swapBtn) {
-        swapBtn.addEventListener("click", function () {
-            let sourceLang = document.getElementById("source_lang");
-            let targetLang = document.getElementById("target_lang");
-            let temp = sourceLang.value;
-            sourceLang.value = targetLang.value;
-            targetLang.value = temp;
-        });
-    }
-});
-
-</script>
-
+<!-- Подключаем кастомные стили и скрипты -->
+<link rel="stylesheet" href="{% static 'css/translate.css' %}">
+<script src="{% static 'js/translate.js' %}"></script>
 {% endblock %}
