@@ -46,10 +46,10 @@
                             {% endfor %}
                         </select>
                     </form>
-                    <a class="btn btn-outline-light" href="{% url 'logout' %}">Logout</a>
+                    <a class="btn btn-outline-light" href="{% url 'account_logout' %}">Logout</a>
                 {% else %}
-                    <a class="btn btn-outline-light me-2" href="{% url 'login' %}">Login</a>
-                    <a class="btn btn-primary" href="{% url 'register' %}">Register</a>
+                    <a class="btn btn-outline-light me-2" href="{% url 'account_login' %}">Login</a>
+                    <a class="btn btn-primary" href="{% url 'account_signup' %}">Register</a>
                 {% endif %}
             </div>
         </div>
