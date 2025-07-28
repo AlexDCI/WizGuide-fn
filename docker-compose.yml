@@ -6,6 +6,7 @@ services:
     command: gunicorn --bind 0.0.0.0:8000 wiz_guide_fn.wsgi:application --access-logfile - --error-logfile -
     volumes:
       - .:/app
+      - static_volume:/app/staticfiles  # добавляем volume для статики
     ports:
       - "8000:8000"
     depends_on:
