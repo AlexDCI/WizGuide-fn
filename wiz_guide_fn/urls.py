@@ -30,15 +30,9 @@ urlpatterns = [
 
     # path("users/", include("users.urls")),
     path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
-<<<<<<< HEAD
 
 ] 
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
-=======
-] 
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
->>>>>>> temporary-branch
