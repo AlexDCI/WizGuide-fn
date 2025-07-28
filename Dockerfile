@@ -20,4 +20,4 @@ RUN python manage.py collectstatic --noinput
 ENV PYTHONUNBUFFERED=1
 
 # Запуск gunicorn для сервера
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "wiz_guide_fn.wsgi:application"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn --bind 0.0.0.0:8000 wiz_guide_fn.wsgi:application"]
