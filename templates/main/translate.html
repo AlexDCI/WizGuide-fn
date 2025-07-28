@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/translate.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid d-flex justify-content-center p-0">
     <div class="form-container">
@@ -58,8 +62,5 @@
     </div>
 </div>
 
-<!-- Подключаем кастомные стили и скрипты -->
-<link rel="stylesheet" href="{% static 'css/translate.css' %}">
 <script src="{% static 'js/translate.js' %}"></script>
 {% endblock %}
-
