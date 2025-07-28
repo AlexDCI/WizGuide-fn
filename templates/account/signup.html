@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static socialaccount %}
+{% load static %}
 
 {% block title %}Sign Up - WizGuide{% endblock %}
 
@@ -8,13 +8,12 @@
 
 <div class="auth-wrapper">
     <div class="auth-card">
-        <h2 class="auth-title">Complete Your Registration</h2>
-        <p>Please confirm your details to finish signing up.</p>
+        <h2 class="auth-title">Create your account</h2>
 
-        <form method="POST" class="auth-form">
+        <form method="POST" action="{% url 'account_signup' %}" class="auth-form">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="auth-btn">Complete Registration</button>
+            <button type="submit" class="auth-btn">Register</button>
         </form>
     </div>
 </div>

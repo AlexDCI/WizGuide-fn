@@ -1,18 +1,16 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
 <div class="container-fluid d-flex justify-content-center p-0">
-    <!-- Контейнер формы с ограниченной шириной -->
     <div class="form-container">
         <h1>{{ translations.title }}</h1>
 
         <form method="post">
             {% csrf_token %}
-
-            <!-- Поле ввода текста -->
             <label for="text">{{ translations.text_label }}:</label>
             <textarea name="text" id="text" class="form-control mb-3 text-area-large"></textarea>
 
-            <!-- Блок выбора языков (под полем ввода) -->
             <div class="d-flex align-items-center mb-3">
                 <select name="source_lang" id="source_lang" class="form-select">
                     <option value="" disabled {% if not source_lang %}selected{% endif %}>Выберите язык</option>
@@ -21,7 +19,6 @@
                     {% endfor %}
                 </select>
 
-                <!-- Кнопка смены языков -->
                 <button type="button" id="swap-languages" class="btn btn-secondary mx-2">↔</button>
 
                 <select name="target_lang" id="target_lang" class="form-select">
@@ -32,14 +29,12 @@
                 </select>
             </div>
 
-            <!-- Поле ввода комментария -->
             <label for="comment_request">{{ translations.comment_request_label }}:</label>
             <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-large" placeholder="{{ translations.optional }}"></textarea>
 
             <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
         </form>
 
-        <!-- Кнопка очистки чата -->
         <form method="post" action="{% url 'clear_chat' %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger w-100 mt-3 custom-clear-btn">Clear Chat</button>
@@ -63,90 +58,9 @@
     </div>
 </div>
 
-
-<style>
-    /* Убираем лишние отступы и центрируем контейнер формы */
-    .container-fluid {
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        overflow-x: hidden; /* Скрываем горизонтальный скроллинг */
-    }
-
-    /* Контейнер формы с ограничениями по ширине */
-    .form-container {
-        width: 100%; /* Форма будет занимать всю доступную ширину */
-        max-width: 800px; /* Максимальная ширина формы */
-        min-width: 480px; /* Минимальная ширина формы */
-        margin: 0 auto; /* Центрируем форму на странице */
-        padding: 0 15px; /* Добавляем отступы слева и справа */
-        box-sizing: border-box; /* Учитываем padding и border */
-        overflow: hidden; /* Все, что выходит за пределы, будет скрыто */
-    }
-
-    /* Сделаем поля ввода шире, с возможностью изменения ширины */
-    .text-area-large, .comment-area-large {
-        width: 100%;
-        resize: both; /* Возможность изменять и ширину, и высоту */
-        min-width: 400px; /* Минимальная ширина полей */
-        max-width: 100%; /* Максимальная ширина полей - 100% от контейнера */
-        margin: 0 0 15px 0;
-        box-sizing: border-box; /* Чтобы padding и border не выходили за пределы элемента */
-    }
-
-    .text-area-large {
-        height: 400px; /* Высота поля ввода текста */
-    }
-
-    .comment-area-large {
-        height: 200px; /* Высота поля ввода комментария */
-    }
-
-    .chat-history {
-        max-height: 400px;
-        overflow-y: auto;
-        width: 100%; /* Ширина чата */
-        resize: horizontal; /* Возможность изменять только ширину */
-        box-sizing: border-box;
-        min-width: 400px; /* Минимальная ширина чата */
-        max-width: 100%; /* Максимальная ширина чата - 100% от контейнера */
-    }
-
-    /* Медиазапросы для адаптивной ширины формы */
-    @media (max-width: 768px) {
-        .form-container {
-            width: 100%;
-            max-width: 100%;
-            min-width: 100%; /* На мобильных устройствах форма будет занимать всю ширину */
-            padding: 0 5px; /* Уменьшаем отступы на мобильных устройствах */
-        }
-
-        /* Уменьшаем минимальную ширину формы на мобильных */
-        .text-area-large, .comment-area-large, .chat-history {
-            min-width: 95%; /* Теперь формы и чат занимают 90% от ширины экрана */
-        }
-
-        /* Уменьшаем боковые отступы для мобильных */
-        .form-container {
-            padding: 0 3%; /* Уменьшаем боковые отступы на мобильных */
-        }
-    }
-</style>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("swap-languages").addEventListener("click", function () {
-            let sourceLang = document.getElementById("source_lang");
-            let targetLang = document.getElementById("target_lang");
-
-            let temp = sourceLang.value;
-            sourceLang.value = targetLang.value;
-            targetLang.value = temp;
-        });
-    });
-</script>
+<!-- Подключаем кастомные стили и скрипты -->
+<link rel="stylesheet" href="{% static 'css/translate.css' %}">
+<script src="{% static 'js/translate.js' %}"></script>
 {% endblock %}
 
 {% extends "base.html" %}
