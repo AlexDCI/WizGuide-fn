@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Копируем все файлы проекта в контейнер
 COPY . .
 
+# Собираем статику
+RUN python manage.py collectstatic --noinput
+
 # Указываем переменную окружения для Python (чтобы избежать проблем с буферизацией вывода)
 ENV PYTHONUNBUFFERED=1
 
