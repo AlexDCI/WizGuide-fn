@@ -13,7 +13,9 @@ services:
       db:
         condition: service_healthy  # Теперь Django ждёт, пока БД будет готова
     env_file:
-      - .env  
+      - .env 
+    networks:
+      - nginx-network
 
   db:
     image: postgres:15
@@ -30,7 +32,14 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       retries: 5
+    
+    networks:
+      - nginx-network
 
 volumes:
   postgres_data:
   static_volume:
+
+networks:
+  nginx-network:    # это новая внешняя сеть
+    external: true
