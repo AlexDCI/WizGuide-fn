@@ -9,6 +9,9 @@
 <div class="container-fluid d-flex justify-content-center p-0">
     <div class="form-container">
         <h1>{{ translations.title }}</h1>
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
 
         <form method="post">
             {% csrf_token %}
