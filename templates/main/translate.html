@@ -13,7 +13,7 @@
         <form method="post">
             {% csrf_token %}
             <label for="text">{{ translations.text_label }}:</label>
-            <textarea name="text" id="text" class="form-control mb-3 text-area-large"></textarea>
+            <textarea name="text" id="text" class="form-control mb-3 text-area-large" maxlength="1000"></textarea>></textarea>
 
             <div class="d-flex align-items-center mb-3">
                 <select name="source_lang" id="source_lang" class="form-select">
@@ -34,7 +34,7 @@
             </div>
 
             <label for="comment_request">{{ translations.comment_request_label }}:</label>
-            <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-large" placeholder="{{ translations.optional }}"></textarea>
+            <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-large" placeholder="{{ translations.optional }}" maxlength="1000"></textarea>
 
             <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
         </form>

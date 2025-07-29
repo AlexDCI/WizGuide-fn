@@ -154,14 +154,15 @@ def translate_text(request):
         return redirect_to_same_page(source_lang, target_lang, selected_lang)
 
     # Возвращаем форму с выбранным языком (если не POST)
-    return render(request, "main/translate.html", {
-        "translations": translations,  # Передаем переводы в шаблон
-        "selected_lang": selected_lang,  # Передаем текущий выбранный язык интерфейса
-        "source_lang": source_lang,  # Исходный язык
-        "target_lang": target_lang,  # Целевой язык
-        "chat_history": chat_history,  # Передаем историю чатов
-        "languages": languages  # Передаем список языков для выбора
-    })
+    if len(text) > 1000 or (comment_request and len(comment_request) > 1000):
+        return render(request, "main/translate.html", {
+            "translations": translations,  # Передаем переводы в шаблон
+            "selected_lang": selected_lang,  # Передаем текущий выбранный язык интерфейса
+            "source_lang": source_lang,  # Исходный язык
+            "target_lang": target_lang,  # Целевой язык
+            "chat_history": chat_history,  # Передаем историю чатов
+            "languages": languages  # Передаем список языков для выбора
+        })
 
 
 @login_required
