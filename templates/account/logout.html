@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Logged Out - WizGuide{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/logout.css' %}">
+
+<div class="logout-wrapper">
+    <div class="logout-card">
+        <h2>You've been logged out</h2>
+        <p>Thanks for visiting WizGuide. We hope to see you again soon!</p>
+        <a href="{% url 'account_login' %}" class="btn btn-primary mt-3">Log in again</a>
+    </div>
+</div>
+{% endblock %}

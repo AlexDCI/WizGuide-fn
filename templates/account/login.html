@@ -1,24 +1,23 @@
 {% extends "base.html" %}
-
-{% load static socialaccount %}
+{% load socialaccount static %}
 
 {% block title %}Login - WizGuide{% endblock %}
 
 {% block content %}
-
-
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 
 <div class="auth-wrapper">
     <div class="auth-card">
+        <h2 class="auth-title">Login to WizGuide</h2>
 
-        <h2 class="auth-title">Authentication Required</h2>
-        <p>Please register or log in to access this page.</p>
+        <form method="POST" action="{% url 'account_login' %}" class="auth-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="auth-btn">Login</button>
+        </form>
 
-        <div class="login-links">
-            <a href="{% url 'login' %}" class="auth-btn">Login</a>
-            <a href="{% url 'register' %}" class="auth-btn">Register</a>
-        </div>
+        <p>Don't have an account?</p>
+        <a href="{% url 'account_signup' %}" class="auth-btn">Register</a>
 
         <form method="POST" action="{% provider_login_url 'google' %}">
             {% csrf_token %}
@@ -29,5 +28,4 @@
         </form>
     </div>
 </div>
-
 {% endblock %}

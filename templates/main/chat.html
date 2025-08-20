@@ -1,52 +1,12 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat AI</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-        }
+{% extends "base.html" %}
+{% load static %}
 
-        h1 {
-            color: #333;
-        }
+{% block title %}Chat AI - WizGuide{% endblock %}
 
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
-        }
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
 
-        button {
-            padding: 10px 15px;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        #response {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #f9f9f9;
-        }
-    </style>
-</head>
-<body>
+<div class="chat-container">
     <h1>Chat AI</h1>
     <form id="chat-form" method="POST">
         {% csrf_token %}
@@ -54,32 +14,7 @@
         <button type="submit">Отправить</button>
     </form>
     <div id="response"></div>
+</div>
 
-    <script>
-        document.getElementById("chat-form").addEventListener("submit", async function(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            const responseDiv = document.getElementById("response");
-
-            try {
-                const response = await fetch("{% url 'chat_with_openai' %}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRFToken": csrftoken
-                    },
-                    body: formData,
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    responseDiv.innerHTML = `<p><b>Ответ ИИ:</b> ${data.response}</p>`;
-                } else {
-                    responseDiv.innerHTML = `<p style="color:red;">Ошибка: ${data.error}</p>`;
-                }
-            } catch (error) {
-                responseDiv.innerHTML = `<p style="color:red;">Произошла ошибка: ${error.message}</p>`;
-            }
-        });
-    </script>
-</body>
-</html>
+<script src="{% static 'js/chat.js' %}"></script>
+{% endblock %}

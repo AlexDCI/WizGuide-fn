@@ -14,6 +14,7 @@ import json
 from django.utils.translation import gettext_lazy as _
 from .services import translate_text_api, generate_comment_api, save_chat_to_db, get_user_chat_history
 from django.utils.translation import activate, get_language
+from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseServerError
 
 
@@ -117,52 +118,50 @@ def translate_text(request):
     Основная функция для обработки запроса на перевод текста.
     Обрабатывает сохранение языков в сессии и редирект с актуальными языковыми параметрами.
     """
-    # Получаем выбранный язык интерфейса из GET-параметров или из сессии
+
+    # Получаем язык интерфейса
     selected_lang = request.GET.get("lang", request.session.get("selected_lang", "English"))
-    
-    # Сохраняем язык интерфейса в сессии
     request.session["selected_lang"] = selected_lang
-    
-    # Получаем переводы для выбранного языка интерфейса
     translations = get_interface_translations(selected_lang)
-    
-    # Загружаем историю чатов
+
+    # История чатов
     chat_history = load_chat_history(request.user)
-    
-    # Получаем исходный и целевой языки из GET-запроса или из сессии
+
+    # Языки
     source_lang = request.GET.get("source_lang", request.session.get("source_lang", "English"))
     target_lang = request.GET.get("target_lang", request.session.get("target_lang", "Russian"))
-    
-    # Сохраняем исходный и целевой языки в сессии
     request.session["source_lang"] = source_lang
     request.session["target_lang"] = target_lang
 
+    # Ошибка (если будет)
+    error = None
+
     if request.method == "POST":
-        # Если метод POST, сохраняем новые языки из формы
         source_lang = request.POST.get("source_lang", source_lang)
         target_lang = request.POST.get("target_lang", target_lang)
-        text = request.POST.get("text")
-        comment_request = request.POST.get("comment_request")
+        text = request.POST.get("text", "")
+        comment_request = request.POST.get("comment_request", "")
 
-        # Обрабатываем перевод и генерируем комментарий
-        translation, comment = handle_translation(source_lang, target_lang, text, comment_request)
-        
-        # Сохраняем данные в базе
-        save_translation_to_db(request.user, text, translation, comment)
-        
-        # Перенаправляем на страницу с актуальными параметрами
-        return redirect_to_same_page(source_lang, target_lang, selected_lang)
+        # Проверка ограничений
+        if len(text) > 1000:
+            error = _("The text must not exceed 1000 characters.")
+        elif comment_request and len(comment_request) > 1000:
+            error = _("The comment must not exceed 1000 characters.")
+        else:
+            translation, comment = handle_translation(source_lang, target_lang, text, comment_request)
+            save_translation_to_db(request.user, text, translation, comment)
+            return redirect_to_same_page(source_lang, target_lang, selected_lang)
 
-    # Возвращаем форму с выбранным языком (если не POST)
+    # Рендерим шаблон
     return render(request, "main/translate.html", {
-        "translations": translations,  # Передаем переводы в шаблон
-        "selected_lang": selected_lang,  # Передаем текущий выбранный язык интерфейса
-        "source_lang": source_lang,  # Исходный язык
-        "target_lang": target_lang,  # Целевой язык
-        "chat_history": chat_history,  # Передаем историю чатов
-        "languages": languages  # Передаем список языков для выбора
+        "translations": translations,
+        "selected_lang": selected_lang,
+        "source_lang": source_lang,
+        "target_lang": target_lang,
+        "chat_history": chat_history,
+        "languages": languages,
+        "error": error  # передаём ошибку, если была
     })
-
 
 @login_required
 def clear_chat(request):

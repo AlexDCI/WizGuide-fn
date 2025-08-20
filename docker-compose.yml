@@ -6,13 +6,16 @@ services:
     command: gunicorn --bind 0.0.0.0:8000 wiz_guide_fn.wsgi:application --access-logfile - --error-logfile -
     volumes:
       - .:/app
+      - static_volume:/app/staticfiles  # добавляем volume для статики
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     depends_on:
       db:
         condition: service_healthy  # Теперь Django ждёт, пока БД будет готова
     env_file:
-      - .env  
+      - .env 
+    networks:
+      - nginx-network
 
   db:
     image: postgres:15
@@ -29,6 +32,14 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       retries: 5
+    
+    networks:
+      - nginx-network
 
 volumes:
   postgres_data:
+  static_volume:
+
+networks:
+  nginx-network:    # это новая внешняя сеть
+    external: true
