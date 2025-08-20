@@ -10,4 +10,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),  # Для страницы About
     path('contact/', views.contact, name='contact'),  # Для страницы Contact
     path('clear_chat/', views.clear_chat, name='clear_chat'),  # Очистка чата
+    path('token/me', views.issue_token, name='issue_token'),
+    path('save-speech', views.save_speech_result, name='save_speech'),
 ]

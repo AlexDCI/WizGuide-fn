@@ -3,6 +3,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 import openai
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -16,6 +17,41 @@ from .services import translate_text_api, generate_comment_api, save_chat_to_db,
 from django.utils.translation import activate, get_language
 from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseServerError
+from datetime import datetime, timedelta
+import json, jwt
+
+
+@login_required
+def issue_token(request):
+    """Короткий JWT для FastAPI (действителен 30 минут)."""
+    payload = {
+        "user_id": request.user.id,
+        "username": request.user.username,
+        "exp": datetime.utcnow() + timedelta(minutes=30),
+        "iss": "django"
+    }
+    token = jwt.encode(payload, settings.VOICE_JWT_SECRET, algorithm="HS256")
+    return JsonResponse({"access": token})
+
+@login_required
+def save_speech_result(request):
+    """Сохраняем распознанный текст и перевод в ChatHistory."""
+    if request.method != "POST":
+        return HttpResponseBadRequest("POST only")
+    try:
+        data = json.loads(request.body.decode("utf-8"))
+        src = data.get("source_text") or ""
+        trg = data.get("translated_text") or ""
+        comment = data.get("comment")
+        ChatHistory.objects.create(
+            user=request.user,
+            input_text=src,
+            translated_text=trg,
+            comment=comment
+        )
+        return JsonResponse({"ok": True})
+    except Exception as e:
+        return JsonResponse({"ok": False, "error": str(e)}, status=400)
 
 
 # def index(request):

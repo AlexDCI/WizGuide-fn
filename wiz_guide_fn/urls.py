@@ -27,6 +27,7 @@ urlpatterns = [
     # path("users/", include("users.urls")),
     path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
     path('accounts/', include('allauth.urls')),
+    path('api/', include('main.urls')),   #  подключаем main
 
 ]
 

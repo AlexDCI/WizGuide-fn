@@ -41,7 +41,17 @@ INSTALLED_APPS = [
 
     # Дополнительно
     'django_extensions',
+
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+VOICE_JWT_SECRET = os.getenv("VOICE_JWT_SECRET", SECRET_KEY)  # общий секрет с FastAPI
 
 # 🧱 Middleware
 MIDDLEWARE = [

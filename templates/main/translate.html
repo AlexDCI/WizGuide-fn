@@ -3,68 +3,109 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/translate.css' %}">
+<style>
+  #meter{width:100%;height:12px;background:#eee;border-radius:6px;overflow:hidden}
+  #level{height:100%;width:0%;background:lime}
+</style>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid d-flex justify-content-center p-0">
-    <div class="form-container">
-        <h1>{{ translations.title }}</h1>
-        {% if error %}
-            <div class="alert alert-danger">{{ error }}</div>
-        {% endif %}
+  <div class="form-container">
+    <h1>{{ translations.title }}</h1>
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
 
-        <form method="post">
-            {% csrf_token %}
-            <label for="text">{{ translations.text_label }}:</label>
-            <textarea name="text" id="text" class="form-control mb-3 text-area-large" maxlength="1000"></textarea></textarea>
+    <!-- форма текстового перевода -->
+    <form method="post">
+      {% csrf_token %}
+      <label for="text">{{ translations.text_label }}:</label>
+      <textarea name="text" id="text" class="form-control mb-3 text-area-large" maxlength="1000"></textarea>
 
-            <div class="d-flex align-items-center mb-3">
-                <select name="source_lang" id="source_lang" class="form-select">
-                    <option value="" disabled {% if not source_lang %}selected{% endif %}>Выберите язык</option>
-                    {% for lang in languages %}
-                        <option value="{{ lang }}" {% if source_lang == lang %}selected{% endif %}>{{ lang }}</option>
-                    {% endfor %}
-                </select>
+      <div class="d-flex align-items-center mb-3">
+        <select name="source_lang" id="source_lang" class="form-select">
+          <option value="" disabled {% if not source_lang %}selected{% endif %}>Выберите язык</option>
+          {% for lang in languages %}
+            <option value="{{ lang }}" {% if source_lang == lang %}selected{% endif %}>{{ lang }}</option>
+          {% endfor %}
+        </select>
 
-                <button type="button" id="swap-languages" class="btn btn-secondary mx-2">↔</button>
+        <button type="button" id="swap-languages" class="btn btn-secondary mx-2">↔</button>
 
-                <select name="target_lang" id="target_lang" class="form-select">
-                    <option value="" disabled {% if not target_lang %}selected{% endif %}>Выберите язык</option>
-                    {% for lang in languages %}
-                        <option value="{{ lang }}" {% if target_lang == lang %}selected{% endif %}>{{ lang }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+        <select name="target_lang" id="target_lang" class="form-select">
+          <option value="" disabled {% if not target_lang %}selected{% endif %}>Выберите язык</option>
+          {% for lang in languages %}
+            <option value="{{ lang }}" {% if target_lang == lang %}selected{% endif %}>{{ lang }}</option>
+          {% endfor %}
+        </select>
+      </div>
 
-            <label for="comment_request">{{ translations.comment_request_label }}:</label>
-            <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-large" placeholder="{{ translations.optional }}" maxlength="1000"></textarea>
+      <label for="comment_request">{{ translations.comment_request_label }}:</label>
+      <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-large"
+        placeholder="{{ translations.optional }}" maxlength="1000"></textarea>
 
-            <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
-        </form>
+      <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
+    </form>
 
-        <form method="post" action="{% url 'clear_chat' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger w-100 mt-3 custom-clear-btn">Clear Chat</button>
-        </form>
+    <form method="post" action="{% url 'clear_chat' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger w-100 mt-3 custom-clear-btn">Clear Chat</button>
+    </form>
 
-        {% if chat_history %}
-        <div class="chat-history mt-4 p-3 bg-light rounded">
-            <h3>{{ translations.history_label }}</h3>
-            <ul class="list-group">
-                {% for chat in chat_history %}
-                    <li class="list-group-item">
-                        <strong>{{ chat.input_text }}</strong> → <em>{{ chat.translated_text }}</em>
-                        {% if chat.comment %}
-                            <br><small>{{ translations.explanation_label }}: {{ chat.comment }}</small>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
+    {% if chat_history %}
+    <div class="chat-history mt-4 p-3 bg-light rounded">
+      <h3>{{ translations.history_label }}</h3>
+      <ul class="list-group">
+        {% for chat in chat_history %}
+          <li class="list-group-item">
+            <strong>{{ chat.input_text }}</strong> → <em>{{ chat.translated_text }}</em>
+            {% if chat.comment %}
+              <br><small>{{ translations.explanation_label }}: {{ chat.comment }}</small>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
     </div>
+    {% endif %}
+  </div>
 </div>
 
+<!-- 🎤 Голосовой перевод -->
+<div class="mt-5 p-3 bg-light rounded">
+  <h3>🎤 Голосовой перевод</h3>
 
+  <div class="d-flex gap-2 align-items-center mb-2">
+    <label>С языка:</label>
+    <select id="voice_source" class="form-select" style="max-width:200px">
+      <option value="auto">Авто</option>
+      <option value="ru">Русский</option>
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+    </select>
+
+    <label>На язык:</label>
+    <select id="voice_target" class="form-select" style="max-width:200px">
+      <option value="en">English</option>
+      <option value="ru">Русский</option>
+      <option value="de">Deutsch</option>
+    </select>
+  </div>
+
+  <div class="row mb-2">
+    <button id="recBtn" class="btn btn-primary">● Записать</button>
+    <button id="stopBtn" class="btn btn-secondary" disabled>■ Стоп</button>
+  </div>
+
+  <p id="status">Готово</p>
+  <div id="meter"><div id="level"></div></div>
+
+  <div class="box mt-3 p-2 bg-white border rounded" id="recognized">📝 Распознанный текст:\n—</div>
+  <div class="box mt-2 p-2 bg-white border rounded" id="translated">🌍 Перевод:\n—</div>
+</div>
+
+<!-- общий JS -->
 <script src="{% static 'js/translate.js' %}"></script>
+<!-- голосовой JS -->
+<script src="{% static 'js/voice.js' %}"></script>
 {% endblock %}
