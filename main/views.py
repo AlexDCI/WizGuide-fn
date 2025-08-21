@@ -2,7 +2,6 @@
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.http import JsonResponse
 from django.http import JsonResponse, HttpResponseBadRequest
 import openai
 from django.conf import settings
