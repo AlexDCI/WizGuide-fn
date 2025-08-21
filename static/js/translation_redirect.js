@@ -1,19 +1,40 @@
-// static/js/translation_redirect.js
-
-// Пример с имитацией завершения перевода после запроса
 document.addEventListener("DOMContentLoaded", function () {
-    const translateButton = document.querySelector(".cta-button");
+  // Прокрутка к истории
+  const chatHistory = document.querySelector('.chat-history');
+  if (chatHistory) {
+    setTimeout(() => chatHistory.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+  }
 
-    if (translateButton) {
-        translateButton.addEventListener("click", function (e) {
-            // Можно заменить на реальную логику, если есть async-запрос
-            e.preventDefault();
+  // Переключение языков
+  const swapBtn = document.getElementById("swap-languages");
+  if (!swapBtn) return;
 
-            // Здесь может быть ваш fetch() или Ajax запрос — и после успешного ответа:
-            // setTimeout используется как имитация "завершения перевода"
-            setTimeout(() => {
-                window.location.href = "/history/";
-            }, 3000); // 3 секунды — замени на реальное событие
-        });
-    }
+  swapBtn.addEventListener("click", function () {
+    const src = document.getElementById("source_lang");
+    const tgt = document.getElementById("target_lang");
+    if (!src || !tgt) return;
+
+    // Если выбран placeholder (disabled), попробуем сдвинуться на первый реальный пункт
+    const fixIndex = (sel) => {
+      if (sel.selectedIndex < 0) sel.selectedIndex = 0;
+      // если отмечен disabled — сместиться на следующий доступный
+      if (sel.options[sel.selectedIndex]?.disabled) {
+        for (let i = 0; i < sel.options.length; i++) {
+          if (!sel.options[i].disabled) { sel.selectedIndex = i; break; }
+        }
+      }
+    };
+    fixIndex(src);
+    fixIndex(tgt);
+
+    // Меняем выбранные элементы местами по индексу
+    const srcIdx = src.selectedIndex;
+    const tgtIdx = tgt.selectedIndex;
+    src.selectedIndex = tgtIdx;
+    tgt.selectedIndex = srcIdx;
+
+    // Сообщим слушателям об изменении (на случай сторонних обработчиков)
+    src.dispatchEvent(new Event('change', { bubbles: true }));
+    tgt.dispatchEvent(new Event('change', { bubbles: true }));
+  });
 });
