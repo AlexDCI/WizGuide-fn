@@ -2,56 +2,33 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/translate.css' %}">
-<style>
-  /* компактные поля */
-  .text-area-small   { min-height:160px; resize: vertical; }
-  .comment-area-small{ min-height:100px; resize: vertical; }
-
-  /* блок голоса */
-  .voice-card{ background:#f8f9fa; border-radius:12px; padding:16px; margin-top:22px; }
-  .mic-wrap{ position:relative; display:flex; flex-direction:column; align-items:center; gap:8px; }
-  .mic-btn{
-    width:68px; height:68px; border-radius:50%; font-size:28px; line-height:1;
-    display:flex; align-items:center; justify-content:center;
-    border:none; color:#fff; background:#0d6efd; cursor:pointer;
-    box-shadow:0 6px 18px rgba(13,110,253,.35);
-    user-select:none;
-  }
-  .mic-btn:disabled{ opacity:.6; cursor:not-allowed }
-
-  /* канва для «волн вокруг микрофона» */
-  #micWaves{ position:absolute; inset:-12px 0 auto 0; width:120px; height:120px; pointer-events:none; }
-
-  /* вывод результата */
-  .voice-out{ white-space:pre-wrap; background:#fff; border:1px solid #e6e6e6; border-radius:8px; padding:10px; }
-</style>
+<link rel="stylesheet" href="{% static 'css/translate.css' %}?v=3">
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid d-flex justify-content-center p-0">
-  <div class="form-container">
-    <h1>{{ translations.title }}</h1>
-    {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+<div class="app-shell">
+  <div class="panel">
 
-    <!-- форма текстового перевода -->
-    <form method="post">
+
+    <!-- ФОРМА -->
+    <form method="post" class="form">
       {% csrf_token %}
 
-      <label for="text">{{ translations.text_label }}:</label>
-      <textarea name="text" id="text" class="form-control mb-3 text-area-small" maxlength="1000"></textarea>
+      <label for="text" class="label">{{ translations.text_label }}:</label>
+      <textarea id="text" name="text" maxlength="1000"
+                class="input input--area" placeholder="Введите текст…"></textarea>
 
-      <div class="d-flex align-items-center mb-3">
-        <select name="source_lang" id="source_lang" class="form-select">
+      <div class="row row--langs">
+        <select id="source_lang" name="source_lang" class="input">
           <option value="" disabled {% if not source_lang %}selected{% endif %}>Выберите язык</option>
           {% for lang in languages %}
             <option value="{{ lang }}" {% if source_lang == lang %}selected{% endif %}>{{ lang }}</option>
           {% endfor %}
         </select>
 
-        <button type="button" id="swap-languages" class="btn btn-secondary mx-2">↔</button>
+        <button type="button" id="swap-languages" class="swap" title="Поменять местами">↔</button>
 
-        <select name="target_lang" id="target_lang" class="form-select">
+        <select id="target_lang" name="target_lang" class="input">
           <option value="" disabled {% if not target_lang %}selected{% endif %}>Выберите язык</option>
           {% for lang in languages %}
             <option value="{{ lang }}" {% if target_lang == lang %}selected{% endif %}>{{ lang }}</option>
@@ -59,64 +36,59 @@
         </select>
       </div>
 
-      <label for="comment_request">{{ translations.comment_request_label }}:</label>
-      <textarea name="comment_request" id="comment_request" class="form-control mb-3 comment-area-small"
-        placeholder="{{ translations.optional }}" maxlength="1000"></textarea>
+      <label for="comment_request" class="label">{{ translations.comment_request_label }}:</label>
+      <textarea id="comment_request" name="comment_request" maxlength="1000"
+                class="input input--area input--comment"
+                placeholder="{{ translations.optional }}"></textarea>
 
-      <button type="submit" class="btn btn-primary w-100">{{ translations.translate_btn }}</button>
+      <button type="submit" class="btn btn--primary w-100">{{ translations.translate_btn }}</button>
     </form>
 
-    <!-- 🎤 Голосовой перевод — теперь сразу под полями -->
-    <div class="voice-card">
-      <h5 class="mb-2">🎤 Голосовой перевод</h5>
+    <!-- ГОЛОС -->
+    <section class="voice">
+      <div class="voice__header"><h2>Голосовой перевод</h2></div>
 
-      <div class="mic-wrap">
+      <div class="mic">
         <canvas id="micWaves" width="120" height="120"></canvas>
-        <button id="micBtn" class="mic-btn" title="Зажмите, говорите, отпустите">🎤</button>
-        <div id="v_status" class="small text-muted">Готово</div>
+        <button id="micBtn" class="mic__btn" title="Зажмите, говорите, отпустите">🎤</button>
+        <div id="v_status" class="mic__status">Готово</div>
       </div>
 
-      <div class="mt-2 voice-out" id="v_src"><b>📝 Распознанный текст:</b>\n—</div>
-      <div class="mt-2 voice-out" id="v_trg"><b>🌍 Перевод:</b>\n—</div>
-    </div>
+      <div class="voice__out" id="v_src"><b>📝 Распознанный текст:</b>\n—</div>
+      <div class="voice__out" id="v_trg"><b>🌍 Перевод:</b>\n—</div>
+    </section>
 
-    <!-- история переводов — оставляем в самом конце страницы -->
-    {% if chat_history %}
-<div class="chat-history mt-4 p-3 bg-light rounded">
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <h3 class="m-0">{{ translations.history_label }}</h3>
-    <form method="post" action="{% url 'clear_chat' %}">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-sm btn-danger">Clear Chat</button>
-    </form>
-  </div>
+    <!-- ИСТОРИЯ (оставил .chat-history ul.list-group для совместимости с твоим JS) -->
+    <section class="history chat-history">
+      <div class="history__bar">
+        <h3 class="m-0">{{ translations.history_label }}</h3>
+        <form method="post" action="{% url 'clear_chat' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn--ghost btn--danger">Clear Chat</button>
+        </form>
+      </div>
 
-  <ul class="list-group">
-    {% for chat in chat_history %}
-      <li class="list-group-item">
-        <strong>{{ chat.input_text }}</strong> → <em>{{ chat.translated_text }}</em>
-        {% if chat.comment %}
-          <br><small>{{ translations.explanation_label }}: {{ chat.comment }}</small>
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
-</div>
-{% else %}
-<!-- Если истории нет — всё равно покажем кнопку для единообразия (опционально) -->
-<div class="mt-4">
-  <form method="post" action="{% url 'clear_chat' %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-sm btn-danger">Clear Chat</button>
-  </form>
-</div>
-{% endif %}
+      {% if chat_history %}
+        <ul class="list-group history__list">
+          {% for chat in chat_history %}
+            <li class="list-group-item history__item">
+              <strong>{{ chat.input_text }}</strong> <span class="arr">→</span> <em>{{ chat.translated_text }}</em>
+              {% if chat.comment %}
+                <div class="history__comment">
+                  <small>{{ translations.explanation_label }}: {{ chat.comment }}</small>
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="history__empty">История пока пуста.</div>
+      {% endif %}
+    </section>
 
   </div>
 </div>
 
-<!-- ваш существующий JS для текстовой формы -->
 <script src="{% static 'js/translate.js' %}"></script>
-<!-- новый JS для голоса (press-and-hold + волны) -->
 <script src="{% static 'js/voice.js' %}?v=6"></script>
 {% endblock %}

@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const r = baseR + 20*Math.abs(v);
       const a = (i/seg)*Math.PI*2;
       const x = Math.cos(a)*r, y = Math.sin(a)*r;
-      ctx.fillStyle = "rgba(13,110,253,0.18)";
+      ctx.fillStyle = "rgba(150, 126, 255, 0.22)";
       ctx.beginPath(); ctx.arc(x,y, 2.4 + 1.6*Math.abs(v), 0, Math.PI*2); ctx.fill();
     }
     ctx.restore();

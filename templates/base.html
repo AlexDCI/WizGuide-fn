@@ -2,82 +2,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}WizGuide{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}WizGuide{% endblock %}</title>
 
-    <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap (оставляем для совместимости с другими страницами) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Icons (если где-то нужны) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    {% block extra_css %}{% endblock %}
-
+  <!-- Наши стили -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}?v=4">
+  {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-<header>
-    <h1>WizGuide</h1>
-    <p>Your AI-powered translation and information assistant</p>
-</header>
+  <!-- Воздушная «стеклянная» верхняя панель без синей плашки -->
+  <header class="topbar">
+    <div class="topbar__inner">
 
-<!-- Навигация -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">WizGuide</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="/contact/">Contact</a></li>
-            </ul>
-            <div class="d-flex align-items-center">
-                {% if user.is_authenticated %}
-                    <span class="navbar-text text-white me-3">Вы вошли как <strong>{{ user.username }}</strong></span>
-                    <form method="get" action="" class="me-3">
-                        <select name="lang" id="lang" class="form-select" onchange="this.form.submit()">
-                            {% for lang in languages %}
-                                <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
-                            {% endfor %}
-                        </select>
-                    </form>
-                    <a class="btn btn-outline-light" href="{% url 'account_logout' %}">Logout</a>
-                {% else %}
-                    <a class="btn btn-outline-light me-2" href="{% url 'account_login' %}">Login</a>
-                    <a class="btn btn-primary" href="{% url 'account_signup' %}">Register</a>
-                {% endif %}
-            </div>
-        </div>
+      <a href="/" class="brand">
+        <span class="brand__logo">W</span>
+        <span class="brand__name">WizGuide</span>
+      </a>
+
+      <nav class="nav">
+        <a class="nav__link" href="/">Home</a>
+        <a class="nav__link" href="/about/">About</a>
+        <a class="nav__link" href="/contact/">Contact</a>
+      </nav>
+
+      <div class="topbar__right">
+        {% if user.is_authenticated %}
+          <span class="topbar__user">Вы вошли как <strong>{{ user.username }}</strong></span>
+
+          <form method="get" action="" class="topbar__lang">
+            <select name="lang" id="lang" class="topbar__select" onchange="this.form.submit()">
+              {% for lang in languages %}
+                <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
+              {% endfor %}
+            </select>
+          </form>
+
+          <a class="btn btn--ghost" href="{% url 'account_logout' %}">Logout</a>
+        {% else %}
+          <a class="btn btn--ghost" href="{% url 'account_login' %}">Login</a>
+          <a class="btn btn--primary" href="{% url 'account_signup' %}">Register</a>
+        {% endif %}
+      </div>
+
     </div>
-</nav>
+  </header>
 
-<!-- Контент -->
-<div class="container">
+  <!-- Сообщения Django -->
+  <div class="container-narrow">
     {% if messages %}
+      <div class="alerts">
         {% for message in messages %}
-            <div class="alert {{ message.tags }}">
-                {{ message }}
-            </div>
+          <div class="alert-inline">{{ message }}</div>
         {% endfor %}
+      </div>
     {% endif %}
+  </div>
+
+  <!-- Контент страницы -->
+  <main class="app-shell">
     <div class="content">
-        {% block content %}
-        {% endblock %}
+      {% block content %}{% endblock %}
     </div>
-</div>
+  </main>
 
-<!-- Футер -->
-<footer>
-    <p>&copy; 2025 WizGuide. All rights reserved.</p>
-</footer>
-
+  <!-- Футер -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <p>&copy; 2025 WizGuide. All rights reserved.</p>
+    </div>
+  </footer>
 
 </body>
 </html>
