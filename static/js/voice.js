@@ -9,9 +9,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // Маппинг отображаемых названий -> коды. Всё, что не распознано:
   // source -> "auto", target -> "en" (чтобы FastAPI не падал).
   const NAME2CODE = {
-    "Russian":"ru","Русский":"ru",
-    "English":"en","Английский":"en","English (US)":"en","English (UK)":"en",
-    "German":"de","Немецкий":"de","Deutsch":"de"
+    "English":"en", "Russian":"ru", "German":"de",
+    "Spanish":"es", "French":"fr", "Italian":"it",
+    "Portuguese":"pt", "Chinese":"zh", "Chinese-Traditional":"zh-tw",
+    "Japanese":"ja", "Korean":"ko", "Arabic":"ar",
+    "Hindi":"hi", "Bengali":"bn", "Urdu":"ur",
+    "Turkish":"tr", "Dutch":"nl", "Greek":"el",
+    "Polish":"pl", "Czech":"cs", "Hungarian":"hu",
+    "Swedish":"sv", "Danish":"da", "Finnish":"fi", "Norwegian":"no",
+    "Hebrew":"he", "Thai":"th", "Vietnamese":"vi", "Indonesian":"id", "Malay":"ms",
+    "Filipino":"fil", "Romanian":"ro", "Slovak":"sk", "Bulgarian":"bg",
+    "Croatian":"hr", "Serbian":"sr", "Slovenian":"sl",
+    "Lithuanian":"lt", "Latvian":"lv", "Estonian":"et",
+    "Georgian":"ka", "Armenian":"hy", "Persian":"fa", "Pashto":"ps",
+    "Azerbaijani":"az", "Kazakh":"kk", "Uzbek":"uz", "Tajik":"tg", "Turkmen":"tk", "Kyrgyz":"ky",
+    "Mongolian":"mn", "Swahili":"sw", "Zulu":"zu", "Xhosa":"xh", "Afrikaans":"af",
+    "Haitian Creole":"ht", "Basque":"eu", "Galician":"gl", "Catalan":"ca",
+    "Irish":"ga", "Welsh":"cy", "Scottish Gaelic":"gd", "Maltese":"mt", "Icelandic":"is",
+    "Sanskrit":"sa", "Tibetan":"bo", "Maori":"mi", "Samoan":"sm", "Tongan":"to"
   };
   const srcToCode = (name) => {
     if (!name || name === "Выберите язык") return "auto";
