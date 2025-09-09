@@ -9,27 +9,32 @@
 <div class="app-shell">
   <div class="panel">
 
-
     <!-- ФОРМА -->
     <form method="post" class="form">
       {% csrf_token %}
 
       <label for="text" class="label">{{ translations.text_label }}:</label>
       <textarea id="text" name="text" maxlength="1000"
-                class="input input--area" placeholder="Введите текст…"></textarea>
+                class="input input--area"
+                placeholder="{{ translations.text_placeholder }}"></textarea>
 
       <div class="row row--langs">
-        <select id="source_lang" name="source_lang" class="input">
-          <option value="" disabled {% if not source_lang %}selected{% endif %}>Выберите язык</option>
+        <select id="source_lang" name="source_lang" class="input" aria-label="{{ translations.source_lang_label }}">
+          <option value="" disabled {% if not source_lang %}selected{% endif %}>
+            {{ translations.select_language_placeholder }}
+          </option>
           {% for lang in languages %}
             <option value="{{ lang }}" {% if source_lang == lang %}selected{% endif %}>{{ lang }}</option>
           {% endfor %}
         </select>
 
-        <button type="button" id="swap-languages" class="swap" title="Поменять местами">↔</button>
+        <button type="button" id="swap-languages" class="swap"
+                title="{{ translations.swap_title }}">↔</button>
 
-        <select id="target_lang" name="target_lang" class="input">
-          <option value="" disabled {% if not target_lang %}selected{% endif %}>Выберите язык</option>
+        <select id="target_lang" name="target_lang" class="input" aria-label="{{ translations.target_lang_label }}">
+          <option value="" disabled {% if not target_lang %}selected{% endif %}>
+            {{ translations.select_language_placeholder }}
+          </option>
           {% for lang in languages %}
             <option value="{{ lang }}" {% if target_lang == lang %}selected{% endif %}>{{ lang }}</option>
           {% endfor %}
@@ -44,27 +49,30 @@
       <button type="submit" class="btn btn--primary w-100">{{ translations.translate_btn }}</button>
     </form>
 
-    <!-- ГОЛОС -->
+    <!-- VOICE -->
     <section class="voice">
-      <div class="voice__header"><h2>Голосовой перевод</h2></div>
+      <div class="voice__header"><h2>{{ translations.voice_title }}</h2></div>
 
       <div class="mic">
         <canvas id="micWaves" width="120" height="120"></canvas>
-        <button id="micBtn" class="mic__btn" title="Зажмите, говорите, отпустите">🎤</button>
-        <div id="v_status" class="mic__status">Готово</div>
+        <button id="micBtn" class="mic__btn"
+                title="{{ translations.mic_hint }}">🎤</button>
+        <div id="v_status" class="mic__status">{{ translations.mic_ready }}</div>
       </div>
 
-      <div class="voice__out" id="v_src"><b>📝 Распознанный текст:</b>\n—</div>
-      <div class="voice__out" id="v_trg"><b>🌍 Перевод:</b>\n—</div>
+      <div class="voice__out" id="v_src"><b>📝 {{ translations.voice_recognized_label }}</b>\n—</div>
+      <div class="voice__out" id="v_trg"><b>🌍 {{ translations.voice_translation_label }}</b>\n—</div>
     </section>
 
-    <!-- ИСТОРИЯ (оставил .chat-history ul.list-group для совместимости с твоим JS) -->
+    <!-- ИСТОРИЯ -->
     <section class="history chat-history">
       <div class="history__bar">
         <h3 class="m-0">{{ translations.history_label }}</h3>
         <form method="post" action="{% url 'clear_chat' %}">
           {% csrf_token %}
-          <button type="submit" class="btn btn--ghost btn--danger">Clear Chat</button>
+          <button type="submit" class="btn btn--ghost btn--danger">
+            {{ translations.clear_chat_btn }}
+          </button>
         </form>
       </div>
 
@@ -82,7 +90,7 @@
           {% endfor %}
         </ul>
       {% else %}
-        <div class="history__empty">История пока пуста.</div>
+        <div class="history__empty">{{ translations.empty_history_label }}</div>
       {% endif %}
     </section>
 

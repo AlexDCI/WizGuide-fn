@@ -36,7 +36,7 @@
 
       <div class="topbar__right">
         {% if user.is_authenticated %}
-          <span class="topbar__user">Вы вошли как <strong>{{ user.username }}</strong></span>
+          <span class="topbar__user">Logged in as <strong>{{ user.username }}</strong></span>
 
           <form method="get" action="" class="topbar__lang">
             <select name="lang" id="lang" class="topbar__select" onchange="this.form.submit()">
