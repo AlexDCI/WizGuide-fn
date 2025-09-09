@@ -1,124 +1,87 @@
-/* Палитра и токены — совпадают со стилем translate.css */
-:root{
-  --bg: #F6F3FF;
-  --card: #FFFFFFE6;
-  --stroke: #E9E4FF;
-  --text: #1C1B22;
-  --muted: #6B6780;
+/* main.css — только для главной страницы */
 
-  --primary: #CBB8FF;
-  --primary-hover: #B8A1FF;
-  --primary-press: #A68EFF;
+.main-content{
+  --bg:#F6F3FF; --card:#FFFFFFE6; --stroke:#E9E4FF;
+  --text:#1C1B22; --muted:#6B6780;
+  --primary:#CBB8FF; --primary-hover:#B8A1FF; --primary-press:#A68EFF;
+  --accent:#D9CCFF; --danger:#EF6B72;
+  --radius-xl:20px; --radius-lg:16px;
+  --shadow-1:0 10px 30px rgba(106,58,255,.10);
+  --shadow-2:0 6px 18px rgba(98,72,255,.16);
 
-  --accent: #D9CCFF;
-  --danger: #EF6B72;
-
-  --radius-xl: 20px;
-  --radius-lg: 16px;
-
-  --shadow-1: 0 10px 30px rgba(106, 58, 255, 0.10);
-  --shadow-2: 0 6px 18px rgba(98, 72, 255, 0.16);
-}
-
-html, body{
-  height:100%;
-  background: radial-gradient(1200px 700px at 10% 0%, #FCFAFF 20%, var(--bg) 80%) no-repeat,
-              var(--bg);
+  background: radial-gradient(1200px 700px at 10% 0%, #FCFAFF 20%, var(--bg) 80%) no-repeat, var(--bg);
   color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-  margin:0;
-}
-
-/* ===== Верхняя панель (без синей плашки) ===== */
-.topbar{
-  position: sticky; top:0; z-index: 50;
-  backdrop-filter: blur(8px);
-  background: rgba(255,255,255,.55);
-  border-bottom: 1px solid var(--stroke);
-}
-.topbar__inner{
-  max-width: 1120px; margin: 0 auto;
-  padding: 10px 14px;
-  display:flex; align-items:center; gap:14px; justify-content:space-between;
-}
-
-/* Брендинг */
-.brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
-.brand__logo{
-  width:32px; height:32px; display:inline-grid; place-items:center;
-  border-radius:10px;
-  background: radial-gradient(90% 90% at 30% 20%, #E4DAFF, #BFAAFD);
-  color:#fff; font-weight:700;
-  box-shadow: 0 6px 16px rgba(150,126,255,.35);
-}
-.brand__name {
-  font-weight: 700;
-  letter-spacing: .2px;
-  color: var(--text);
-  background: linear-gradient(90deg, #B084F7, #8E6FF6);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-/* Навигация */
-.nav{ display:flex; gap:14px; align-items:center; }
-.nav__link{
-  color: var(--muted); text-decoration:none; padding:8px 10px; border-radius:10px;
-  transition: background .2s, color .2s;
-}
-.nav__link:hover{ background:#fff; color: var(--text); box-shadow: var(--shadow-2); }
-
-/* Правая часть */
-.topbar__right{ display:flex; align-items:center; gap:10px; }
-.topbar__user{ color: var(--muted); font-size:14px; }
-.topbar__lang{ margin:0; }
-.topbar__select{
-  appearance: none;
-  border:1px solid var(--stroke);
-  background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="%236B6780"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center/12px;
-  padding:8px 28px 8px 10px;
-  border-radius:12px; font-size:14px;
-}
-
-/* Кнопки */
-.btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      font-weight:600; border-radius: 12px; padding: 9px 14px; border:0; cursor:pointer; text-decoration:none; }
-.btn--primary{ background: var(--primary); color:#111; box-shadow: var(--shadow-2); }
-.btn--primary:hover{ background: var(--primary-hover); }
-.btn--primary:active{ background: var(--primary-press); }
-.btn--ghost{ background: transparent; border:1px solid var(--stroke); color: var(--text); }
-.btn--ghost:hover{ background:#fff; box-shadow: var(--shadow-2); }
-.btn--danger{ color: var(--danger); border-color:#F5B8BC; }
-
-/* Сообщения */
-.container-narrow{ max-width: 920px; margin: 12px auto 0; padding: 0 14px; }
-.alerts{ display:flex; flex-direction:column; gap:8px; }
-.alert-inline{
-  padding:10px 12px; border:1px solid #FFD9D9; background:#FFF4F4; color:#9E2C2F; border-radius:12px;
-}
-
-/* Контентная область */
-.app-shell{
-  min-height: calc(100vh - 160px);
-  display:flex; align-items:flex-start; justify-content:center;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
   padding: 24px 14px 40px;
-}
-.content{ width:100%; max-width: 960px; }
-
-/* Футер */
-.footer{
-  border-top:1px solid var(--stroke);
-  background: rgba(255,255,255,.65);
-}
-.footer__inner{
-  max-width: 1120px; margin: 0 auto; padding: 16px 14px;
-  color: var(--muted); font-size: 14px; text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: 16px;
 }
 
-/* Небольшая адаптивность */
-@media (max-width: 720px){
-  .nav{ display:none; } /* на мобилках ссылки можно скрыть */
-  .topbar__inner{ gap: 10px; }
+/* Карточки */
+.main-content .hero-section,
+.main-content .feature,
+.main-content .testimonial{
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-1);
+  padding: 22px;
+}
+
+/* Hero */
+.main-content .hero-section{ padding:28px; margin-bottom:24px; }
+.main-content .hero-section h2{ margin:0 0 8px; font-size:36px; line-height:1.15; }
+.main-content .hero-section p{ margin:0 0 16px; color:var(--muted); }
+
+/* CTA-кнопка */
+.main-content .cta-button{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:14px 28px; font-size:17px; font-weight:700; line-height:1;
+  color:#fff; text-decoration:none;
+  background: linear-gradient(135deg,#9B6DFF,#7A4BFF);
+  border-radius:32px;
+  box-shadow:0 10px 24px rgba(123,75,255,.45);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  cursor:pointer;
+}
+.main-content .cta-button:hover{
+  background: linear-gradient(135deg,#B18CFF,#8F5FFF);
+  transform: translateY(-2px);
+  box-shadow:0 14px 28px rgba(123,75,255,.55);
+}
+.main-content .cta-button:active{
+  background: linear-gradient(135deg,#7A4BFF,#5E2FFF);
+  transform: translateY(0);
+  box-shadow:0 8px 18px rgba(123,75,255,.40);
+}
+
+/* Why WizGuide */
+.main-content .features-section{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:28px;
+}
+.main-content .features-section > h3{
+  grid-column:1 / -1; margin:0 0 6px; font-size:24px;
+}
+.main-content .feature i{ font-size:22px; color:#6E5AF7; }
+.main-content .feature h4{ margin:0; font-size:18px; }
+.main-content .feature p{ margin:0; color:var(--muted); }
+
+/* Testimonials */
+.main-content .testimonial-section{ margin-top:28px; }
+.main-content .testimonial-section > h3{ margin:0 0 10px; font-size:24px; }
+.main-content .testimonial{ margin:0 0 14px; }
+.main-content .testimonial p{ margin:0 0 8px; }
+
+/* Адаптив */
+@media (max-width: 900px){
+  .main-content{ padding:18px 12px 28px; }
+  .main-content .hero-section h2{ font-size:30px; }
+  .main-content .features-section{ grid-template-columns:1fr; }
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .main-content .cta-button{ transition:none; }
+  .main-content .cta-button:hover{ transform:none; }
 }
