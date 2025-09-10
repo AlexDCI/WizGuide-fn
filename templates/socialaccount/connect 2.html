@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+
+{% block content %}
+<style>
+    /* Обертка для всей страницы */
+    .auth-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f2f2f2;
+    }
+
+    /* Карточка с формой */
+    .auth-card {
+        text-align: center;
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        border: 1px solid #e0e0e0;
+    }
+
+    /* Заголовок */
+    .auth-title {
+        font-size: 1.75rem;
+        color: #333;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+    }
+
+    /* Описание под заголовком */
+    .auth-description {
+        color: #777;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Кнопка "Continue" */
+    .auth-btn {
+        background-color: #007BFF;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .auth-btn:hover {
+        background-color: #0056b3;
+    }
+
+    /* Кнопка для Google */
+    .google-btn {
+        background-color: #db4437;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        margin-top: 1.5rem;
+        display: inline-block;
+    }
+
+    .google-btn:hover {
+        background-color: #c1351d;
+    }
+
+    /* Ссылка для возврата */
+    .back-link {
+        font-size: 1rem;
+        color: #007BFF;
+        text-decoration: none;
+        margin-top: 1rem;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2 class="auth-title">You are about to sign in using a third-party account from Google</h2>
+        <p class="auth-description">Click "Continue" to proceed with Google login. If you don't want to continue, click the back button.</p>
+        
+        <a href="{% provider_login_url 'google' %}" class="google-btn">Continue with Google</a>
+
+        <p class="back-link">
+            <a href="{% url 'home' %}">Back to homepage</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
