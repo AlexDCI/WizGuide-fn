@@ -8,6 +8,8 @@ load_dotenv()
 # 🔑 OpenAI API KEY (если используется)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
+FASTAPI_BASE_URL = os.getenv("FASTAPI_BASE_URL", "http://127.0.0.1:8001")
+
 # 📁 Базовая директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 

@@ -1,6 +1,8 @@
 // voice.js — press & hold + волны + сохранение в БД + языки из основной формы
 document.addEventListener("DOMContentLoaded", () => {
-  const FASTAPI_URL = "http://127.0.0.1:8001/speech-translate";
+  const FASTAPI_URL =
+  ((window && window.FASTAPI_BASE_URL) ? window.FASTAPI_BASE_URL : "http://127.0.0.1:8001")
+  + "/speech-translate";
 
   // Языки берём из твоих селектов формы текстового перевода
   const uiSrc = document.getElementById("source_lang");

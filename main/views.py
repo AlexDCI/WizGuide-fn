@@ -195,7 +195,8 @@ def translate_text(request):
         "target_lang": target_lang,
         "chat_history": chat_history,
         "languages": languages,
-        "error": error  # передаём ошибку, если была
+        "error": error,  # передаём ошибку, если была
+        "FASTAPI_BASE_URL": settings.FASTAPI_BASE_URL, 
     })
 
 @login_required

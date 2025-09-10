@@ -98,5 +98,10 @@
 </div>
 
 <script src="{% static 'js/translate.js' %}"></script>
+
+<script>
+  window.FASTAPI_BASE_URL = "{{ FASTAPI_BASE_URL|default:'http://127.0.0.1:8001'|escapejs }}";
+</script>
+
 <script src="{% static 'js/voice.js' %}?v=6"></script>
 {% endblock %}
