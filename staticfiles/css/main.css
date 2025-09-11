@@ -1,0 +1,87 @@
+/* main.css — только для главной страницы */
+
+.main-content{
+  --bg:#F6F3FF; --card:#FFFFFFE6; --stroke:#E9E4FF;
+  --text:#1C1B22; --muted:#6B6780;
+  --primary:#CBB8FF; --primary-hover:#B8A1FF; --primary-press:#A68EFF;
+  --accent:#D9CCFF; --danger:#EF6B72;
+  --radius-xl:20px; --radius-lg:16px;
+  --shadow-1:0 10px 30px rgba(106,58,255,.10);
+  --shadow-2:0 6px 18px rgba(98,72,255,.16);
+
+  background: radial-gradient(1200px 700px at 10% 0%, #FCFAFF 20%, var(--bg) 80%) no-repeat, var(--bg);
+  color: var(--text);
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  padding: 24px 14px 40px;
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: 16px;
+}
+
+/* Карточки */
+.main-content .hero-section,
+.main-content .feature,
+.main-content .testimonial{
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-1);
+  padding: 22px;
+}
+
+/* Hero */
+.main-content .hero-section{ padding:28px; margin-bottom:24px; }
+.main-content .hero-section h2{ margin:0 0 8px; font-size:36px; line-height:1.15; }
+.main-content .hero-section p{ margin:0 0 16px; color:var(--muted); }
+
+/* CTA-кнопка */
+.main-content .cta-button{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:14px 28px; font-size:17px; font-weight:700; line-height:1;
+  color:#fff; text-decoration:none;
+  background: linear-gradient(135deg,#9B6DFF,#7A4BFF);
+  border-radius:32px;
+  box-shadow:0 10px 24px rgba(123,75,255,.45);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  cursor:pointer;
+}
+.main-content .cta-button:hover{
+  background: linear-gradient(135deg,#B18CFF,#8F5FFF);
+  transform: translateY(-2px);
+  box-shadow:0 14px 28px rgba(123,75,255,.55);
+}
+.main-content .cta-button:active{
+  background: linear-gradient(135deg,#7A4BFF,#5E2FFF);
+  transform: translateY(0);
+  box-shadow:0 8px 18px rgba(123,75,255,.40);
+}
+
+/* Why WizGuide */
+.main-content .features-section{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:28px;
+}
+.main-content .features-section > h3{
+  grid-column:1 / -1; margin:0 0 6px; font-size:24px;
+}
+.main-content .feature i{ font-size:22px; color:#6E5AF7; }
+.main-content .feature h4{ margin:0; font-size:18px; }
+.main-content .feature p{ margin:0; color:var(--muted); }
+
+/* Testimonials */
+.main-content .testimonial-section{ margin-top:28px; }
+.main-content .testimonial-section > h3{ margin:0 0 10px; font-size:24px; }
+.main-content .testimonial{ margin:0 0 14px; }
+.main-content .testimonial p{ margin:0 0 8px; }
+
+/* Адаптив */
+@media (max-width: 900px){
+  .main-content{ padding:18px 12px 28px; }
+  .main-content .hero-section h2{ font-size:30px; }
+  .main-content .features-section{ grid-template-columns:1fr; }
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .main-content .cta-button{ transition:none; }
+  .main-content .cta-button:hover{ transform:none; }
+}
