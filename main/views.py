@@ -18,6 +18,8 @@ from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseServerError
 from datetime import datetime, timedelta
 import json, jwt
+import requests
+from django.conf import settings
 
 
 @login_required
@@ -209,3 +211,60 @@ def clear_chat(request):
         return redirect('translate_text')
     except Exception as e:
         return HttpResponseServerError(f"Произошла ошибка: {str(e)}")
+    
+
+FASTAPI_BASE = getattr(settings, "FASTAPI_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
+
+@csrf_exempt
+def voice_proxy(request, path):
+    """
+    Простой прокси на FastAPI: /voice/<path> -> <FASTAPI_BASE>/<path>
+    Пробрасывает метод, заголовки (без Host), тело/файлы, возвращает статус/контент.
+    """
+    url = f"{FASTAPI_BASE}/{path}"
+
+    # базовые заголовки, уберём Host/Content-Length — их посчитает requests
+    headers = {k: v for k, v in request.headers.items()
+               if k.lower() not in {"host", "content-length"}}
+
+    # Если у тебя используется JWT для авторизации между сервисами —
+    # можно сюда добавить Authorization (если надо), например:
+    # headers["Authorization"] = f"Bearer {<твой_токен>}"
+    # Но если FastAPI эндпоинты публичные — не нужно.
+
+    try:
+        if request.method in ("POST", "PUT", "PATCH"):
+            # Поддержим multipart/form-data (FormData с файлом)
+            files = []
+            for key, f in request.FILES.items():
+                files.append((key, (f.name, f.read(), f.content_type or "application/octet-stream")))
+            data = request.POST.dict() if request.POST else None
+
+            resp = requests.request(
+                method=request.method,
+                url=url,
+                headers=headers,
+                data=data,
+                files=files or None,
+                timeout=60,
+            )
+        else:
+            # GET/DELETE и пр. + query string
+            resp = requests.request(
+                method=request.method,
+                url=url,
+                headers=headers,
+                params=request.GET.copy(),
+                timeout=30,
+            )
+
+    except requests.RequestException as e:
+        return JsonResponse({"error": "upstream_error", "detail": str(e)}, status=502)
+
+    # Отдаём как есть
+    dj = HttpResponse(resp.content, status=resp.status_code)
+    # Пробросим важные заголовки
+    for k, v in resp.headers.items():
+        if k.lower() in {"content-type", "cache-control"}:
+            dj[k] = v
+    return dj
