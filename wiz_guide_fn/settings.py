@@ -16,8 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ⚠️ Секретный ключ
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# 🔧 Режим разработки
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost").split(",")
@@ -125,6 +124,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # 🔑 Авторизация и редиректы
 LOGIN_URL = '/accounts/login/'
