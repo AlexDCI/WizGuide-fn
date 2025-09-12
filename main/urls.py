@@ -3,11 +3,9 @@ from . import views
 
 urlpatterns = [
     # прокси
-    re_path(r'^voice/(?P<path>.*)$', views.voice_proxy, name='voice_proxy'),
-
-    # алиасы под фронтовые пути
-    path('api/token/me', views.issue_token, name='issue_token_api'),
-    path('api/save-speech', views.save_speech_result, name='save_speech_api'),
+    path('api/token/me', views.issue_token),
+    path('api/save-speech', views.save_speech_result),
+    re_path(r'^voice/(?P<path>.*)$', views.voice_proxy),
 
     # остальное
     path('', views.main_page, name='main'),

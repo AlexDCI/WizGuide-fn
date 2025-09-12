@@ -217,27 +217,24 @@ FASTAPI_BASE = getattr(settings, "FASTAPI_BASE_URL", "http://127.0.0.1:8000").rs
 
 @csrf_exempt
 def voice_proxy(request, path):
-    """
-    Простой прокси на FastAPI: /voice/<path> -> <FASTAPI_BASE>/<path>
-    Пробрасывает метод, заголовки (без Host), тело/файлы, возвращает статус/контент.
-    """
     url = f"{FASTAPI_BASE}/{path}"
 
-    # базовые заголовки, уберём Host/Content-Length — их посчитает requests
-    headers = {k: v for k, v in request.headers.items()
-               if k.lower() not in {"host", "content-length"}}
-
-    # Если у тебя используется JWT для авторизации между сервисами —
-    # можно сюда добавить Authorization (если надо), например:
-    # headers["Authorization"] = f"Bearer {<твой_токен>}"
-    # Но если FastAPI эндпоинты публичные — не нужно.
+    # Базовые заголовки без Host/Length.
+    # ВАЖНО: Content-Type для multipart нельзя пересылать — requests выставит свой.
+    base_headers = {k: v for k, v in request.headers.items()
+                    if k.lower() not in {"host", "content-length"}}
 
     try:
         if request.method in ("POST", "PUT", "PATCH"):
-            # Поддержим multipart/form-data (FormData с файлом)
+            # Для multipart убираем Content-Type, иначе boundary ломается
+            headers = {k: v for k, v in base_headers.items()
+                       if k.lower() not in {"content-type"}}
+
             files = []
             for key, f in request.FILES.items():
                 files.append((key, (f.name, f.read(), f.content_type or "application/octet-stream")))
+
+            # Плоские поля из FormData (source_lang, target_lang и т.д.)
             data = request.POST.dict() if request.POST else None
 
             resp = requests.request(
@@ -246,24 +243,21 @@ def voice_proxy(request, path):
                 headers=headers,
                 data=data,
                 files=files or None,
-                timeout=60,
+                timeout=90,
             )
         else:
-            # GET/DELETE и пр. + query string
+            # GET/DELETE
             resp = requests.request(
                 method=request.method,
                 url=url,
-                headers=headers,
+                headers=base_headers,
                 params=request.GET.copy(),
                 timeout=30,
             )
-
     except requests.RequestException as e:
         return JsonResponse({"error": "upstream_error", "detail": str(e)}, status=502)
 
-    # Отдаём как есть
     dj = HttpResponse(resp.content, status=resp.status_code)
-    # Пробросим важные заголовки
     for k, v in resp.headers.items():
         if k.lower() in {"content-type", "cache-control"}:
             dj[k] = v
