@@ -16,8 +16,8 @@
         <p>Please register or log in to access this page.</p>
 
         <div class="login-links">
-            <a href="{% url 'login' %}" class="auth-btn">Login</a>
-            <a href="{% url 'register' %}" class="auth-btn">Register</a>
+            <a href="{% url 'account_login' %}" class="auth-btn">Login</a>
+            <a href="{% url 'account_signup' %}" class="auth-btn">Register</a>
         </div>
 
         <form method="POST" action="{% provider_login_url 'google' %}">
