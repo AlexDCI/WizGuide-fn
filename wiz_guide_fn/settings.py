@@ -121,13 +121,23 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# 🖼️ Статические файлы
+# --- static files ---
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# Django 5+: используем STORAGES, чтобы манифест реально заработал в проде
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+    # долгие заголовки для хешированных файлов
+    WHITENOISE_MAX_AGE = 31536000  # 1 год
 
 # 🔑 Авторизация и редиректы
 LOGIN_URL = '/accounts/login/'
