@@ -13,14 +13,14 @@
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-  <!-- Глобальные стили базы (новый файл) -->
-  <link rel="stylesheet" href="{% static 'css/base.css' %}?v=1">
+  <!-- Глобальные стили базы -->
+  <link rel="stylesheet" href="{% static 'css/base.css' %}?v=5">
 
-  <!-- Страница-дополнительные стили (напр. main.css подключим из дочернего блока) -->
   {% block extra_css %}{% endblock %}
 </head>
 <body>
 
+  <!-- Header -->
   <header class="topbar">
     <div class="topbar__inner">
 
@@ -29,16 +29,17 @@
         <span class="brand__name">WizGuide</span>
       </a>
 
-      <nav class="nav">
+      <!-- Навигация (desktop) -->
+      <nav class="nav d-none d-md-flex">
         <a class="nav__link" href="/">Home</a>
         <a class="nav__link" href="/about/">About</a>
         <a class="nav__link" href="/contact/">Contact</a>
       </nav>
 
-      <div class="topbar__right">
+      <!-- Правый блок (desktop) -->
+      <div class="topbar__right d-none d-md-flex">
         {% if user.is_authenticated %}
           <span class="topbar__user">Logged in as <strong>{{ user.username }}</strong></span>
-
           <form method="get" action="" class="topbar__lang">
             <select name="lang" id="lang" class="topbar__select" onchange="this.form.submit()">
               {% for lang in languages %}
@@ -46,7 +47,6 @@
               {% endfor %}
             </select>
           </form>
-
           <a class="btn btn--ghost" href="{% url 'account_logout' %}">Logout</a>
         {% else %}
           <a class="btn btn--ghost" href="{% url 'account_login' %}">Login</a>
@@ -54,9 +54,45 @@
         {% endif %}
       </div>
 
+      <!-- Кнопка гамбургера (mobile) -->
+      <!-- ВАЖНО: добавлен класс navbar-light, чтобы Bootstrap дал тёмные полоски -->
+      <button class="navbar-toggler d-md-none menu-btn" type="button"
+        data-bs-toggle="collapse" data-bs-target="#mobileMenu"
+        aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"
+        style="background-image:url(&quot;data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0,1)' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E&quot;);background-size:contain;background-repeat:no-repeat;background-position:center;"></span>
+</button>
+
     </div>
   </header>
 
+  <!-- Выпадающее меню (mobile, светлое) -->
+  <div class="collapse d-md-none mobile-menu" id="mobileMenu">
+    <div class="mobile-menu__inner">
+      <a class="nav__link d-block" href="/">Home</a>
+      <a class="nav__link d-block" href="/about/">About</a>
+      <a class="nav__link d-block" href="/contact/">Contact</a>
+
+      <hr class="mobile-menu__divider">
+
+      {% if user.is_authenticated %}
+        <div class="small text-muted mb-2">Вы вошли как <strong>{{ user.username }}</strong></div>
+        <form method="get" action="">
+          <select name="lang" class="form-select mb-2" onchange="this.form.submit()">
+            {% for lang in languages %}
+              <option value="{{ lang }}" {% if selected_lang == lang %}selected{% endif %}>{{ lang }}</option>
+            {% endfor %}
+          </select>
+        </form>
+        <a class="btn btn--ghost w-100 mb-2" href="{% url 'account_logout' %}">Logout</a>
+      {% else %}
+        <a class="btn btn--ghost w-100 mb-2" href="{% url 'account_login' %}">Login</a>
+        <a class="btn btn--primary w-100 mb-2" href="{% url 'account_signup' %}">Register</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Alerts -->
   <div class="container-narrow">
     {% if messages %}
       <div class="alerts">
@@ -67,12 +103,14 @@
     {% endif %}
   </div>
 
+  <!-- Content -->
   <main class="app-shell">
     <div class="content">
       {% block content %}{% endblock %}
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer__inner">
       <p>&copy; 2025 WizGuide. All rights reserved.</p>
