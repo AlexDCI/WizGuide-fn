@@ -18,7 +18,15 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "::1", "192.168.178.27"]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://192.168.178.27:8000",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+
+# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "http://localhost").split(",")
 
 # 🧩 Установленные приложения
