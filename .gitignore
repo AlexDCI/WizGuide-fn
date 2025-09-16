@@ -16,3 +16,4 @@ venv/
 # Игнорируем базы данных
 db.sqlite3
 
+/staticfiles/
